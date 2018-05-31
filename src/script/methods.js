@@ -70,6 +70,38 @@ export default {
         // loadingInstance.close();
       });
     }
+    //类ajax请求
+    Vue.prototype.$web_Http = function (method, param, succeed, catched) {
+      var paramStr = ""
+      for (const key in param) {
+        paramStr += key + "=" + param[key]+"&"
+      }
+      paramStr = paramStr.slice(0, paramStr.length - 1);
+
+      var self = this;
+      Axios.post(Util.url.split("api.do").join("") + method + '.do', paramStr
+      ).then(function (res) {
+        if (res.data.code == 0) {
+          succeed(res);
+        } else {
+          // 没有登录
+          if (res.data.code == 400) {
+            location.href = "";
+          } else if (res.data.code == 5555) {
+            self.$router.push('/nopower');
+          } else if (res.data.code == 20003 || res.data.code == 2020 || res.data.code == 2021 || res.data.code == 40001) {
+            succeed(res);
+            console.log("未授权小程序或未选择数据模板")
+            return
+          }
+          self.$message({
+            message: res.data.message,
+            type: 'error'
+          });
+          catched && catched(res);
+        }
+      })
+    }
     Vue.prototype.$webHttp=function(method,param,succeed, catched) {
       var self = this;
       Axios.post(Util.url.split("api.do").join("")+method + '.do',

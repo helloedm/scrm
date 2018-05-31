@@ -9,7 +9,8 @@ import creatshopinfo from 'components/login/creatshopinfo' //商铺详情
 
 //main 控制台相关
 import main from 'components/main/main'                 //入口页面
-import recruitment from "components/main/recruitment"   //控制台
+import recruitment from "components/main/recruitment"   //控制台(餐饮 零售 门店)
+import Trading_Area from "components/main/Trading_Area" //商圈
 
 Vue.use(Router)
 
@@ -44,7 +45,10 @@ export default new Router({
       path: '/main',
       name: 'main',
       component: main,
-      children: [{ path: '/scrm/main', component: recruitment }]
+      children: [
+                 { path: '/scrm/main', component: recruitment }, 
+                 { path: '/scrm/Trading_Area', component: Trading_Area}
+                ]
     }
   ]
 })

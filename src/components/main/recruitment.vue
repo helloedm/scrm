@@ -1,83 +1,243 @@
 <template>
-  <div class="recruitment" id="recruitment">
-    <!-- <h1>每次相遇有趣的你,都是我的小确幸</h1> -->
-    <div class="h_top_info">
-
-      <div class="h_recruitment_progress">
-        <div style="margin-top:16px;margin-left:20px;font-size:16px;font-weight:bold;">招聘进展</div>
-        <div class="recruitment_progress_detaily">
-          
-          <div class="detaily">
-              <router-link to="talents/newResume">
-                <div class="num">{{getRecruitmentProgress.newResumeCount}}</div>
-                <div class="class">新简历</div>
-              </router-link>
-          </div>            
-          
-          <div class="detaily" @click="setlibrary( 2,'library')">
-            <router-link to="talents/library">
-              <div class="num">{{getRecruitmentProgress.awaitInterviewCount}}</div>
-              <div class="class">待面试</div>
-            </router-link>
-          </div>
-
-          <div class="detaily" @click="settalentStatus(1,'talentpool')">
-              <div class="num">{{getRecruitmentProgress.awaitOfferCount}}</div>
-              <div class="class">沟通offer</div>
-          </div>
-
-          <div class="detaily" @click="settalentStatus(3,'talentpool')">
-              <div class="num">{{getRecruitmentProgress.awaitHireCount}}</div>
-              <div class="class">待入职</div>
-          </div>
-          <div class="detaily">
-            <router-link to="talents/enterprise?type=0">
-              <div class="num">{{getRecruitmentProgress.confirmJoinCount}}</div>
-              <div class="class">已入职</div>              
-            </router-link>
-          </div>
-          <div class="detaily">
-            <router-link to="talents/eliminate">
-              <div class="num">{{getRecruitmentProgress.eliminateCount}}</div>
-              <div class="class">淘汰</div>
-            </router-link>
-          </div>
-        </div>
-      </div>
-
-      <div class="h_user_information">
-
-        <div class="user_info">
-          <img :src="getPersonalInfo.headImg" alt="">
-          <div style="margin:16px 0 0 16px;">
-            <div class="user_name" style="font-size:16px;color:#1F2D3D;font-weight:bold;">{{getPersonalInfo.name}}</div>
-            <div class="user_company" style="font-size:12px;color:#98A9BF;margin-top:8px;">{{getPersonalInfo.companyName}}</div>            
-          </div>
-        </div>
-
-        <div class="getPercent">
-          <div class="percent">
-            <div class="percent_detaily">{{getPercent.interviewPercent}}</div>
-            <div class="percent_introduce">面试率</div>
-          </div>
-          <div class="percent">
-            <div class="percent_detaily">{{getPercent.entryPercent}}</div>
-            <div class="percent_introduce">录用率</div>
-          </div>
-          <div class="percent">
-            <div class="percent_detaily">{{getPercent.joinPercent}}</div>
-            <div class="percent_introduce">入职率</div>
-          </div>
-        </div>
-      </div>
-
-    </div>
+  <div id="recruitment">
+    <div class="recruitment_left">
     
-    <div class="h_middle_info">
-      <div class="hrm_module">
-        <div class="hrm_module_con recruitment_header">
+    <section class="store" v-show="store">
+      <div class="Order">
+        <div class="Order_info">
+          <span class="Order_info_num">120</span>
+          <span>待付款订单</span>
+        </div>
+        <div class="Order_info">
+          <span class="Order_info_num">120</span>
+          <span>待发货订单</span>
+        </div>
+        <div class="Order_info">
+          <span class="Order_info_num">120</span>
+          <span>昨日订单量</span>
+        </div>
+        <div class="Order_info">
+          <span class="Order_info_num">120</span>
+          <span>昨日交易额</span>
+        </div>
+        <div class="Order_info">
+          <span class="Order_info_num">￥12,120</span>
+          <span>会员储值金额</span>
+        </div>
+      </div>      
+    </section>
+
+    <section class="Restaurant" v-show="Restaurant">
+      <div class="Order">
+        <div class="Order_info">
+          <span class="Order_info_num">120</span>
+          <span>今日交易额</span>
+        </div>
+        <div class="Order_info">
+          <span class="Order_info_num">120</span>
+          <span>今日付款订单</span>
+        </div>
+        <div class="Order_info">
+          <span class="Order_info_num">120</span>
+          <span>今日新增会员</span>
+        </div>
+        <div class="Order_info">
+          <span class="Order_info_num">120</span>
+          <span>会员储备金额</span>
+        </div>
+        <div class="Order_info">
+          <span class="Order_info_num">￥12,120</span>
+          <span>预计毛利</span>
+        </div>
+      </div>
+      <div class="food">
+        <div class="Takeoutfood">
+          <div class="Takeoutfood_status">
+            <span style="margin-right:8px;">外卖（已关闭）</span>
+            <el-switch
+              class="foods"
+              style="display: block"
+              v-model="value4"
+              active-color="#5CB3FF"
+              inactive-color="#C0CCDA"
+              @change="Takeoutfood_status(value4)"
+              active-text="开"
+              inactive-text="关">
+            </el-switch>
+          </div>
+          <div class="Receipt">
+            <div class="Deliver_goods" :class={active:value4}>
+              <span style="margin-left:20px;font-size:12px;">外卖订单-待接单</span>
+              <span style="margin-right:16px;color:#5CB3FF;">556个订单</span>
+            </div>
+            <div class="Deliver_goods" :class={active:value4}>
+              <span style="margin-left:20px;font-size:12px;">外卖订单-待发货</span>
+              <span style="margin-right:16px;color:#5CB3FF;">5个订单</span>
+            </div>
+          </div>
+        </div>
+        <div class="Takeoutfood">
+          <div class="Takeoutfood_status">
+            <span style="margin-right:8px;">堂食点餐（已开启）</span>
+            <el-switch
+              @change="dinner(value3)"
+              class="foods"
+              style="display: block"
+              v-model="value3"
+              active-color="#5CB3FF"
+              inactive-color="#C0CCDA"
+              active-text="开"
+              inactive-text="关">
+            </el-switch>
+          </div>
+          <div class="Receipt">
+            <div class="Deliver_goods" :class={active:value3}>
+              <span style="margin-left:20px;font-size:12px;">堂食订单-待付款</span>
+              <span style="margin-right:16px;color:#5CB3FF;">556个订单</span>
+            </div>
+          </div>
+        </div>
+      </div> 
+    </section>
+
+    <section class="retail" v-show="retail">
+      <div class="Member_zone">
+        <div style="font-size:14px;color:rgba(31,45,61,1);line-height:20px;font-weight:bold;margin:16px 0 0 24px;">会员</div>
+        <div class="member_num">
+          <div class="left">
+            <div class="information" style="margin-top:20px;">
+              <img src="../../images/control/1.png" alt="">
+              <div>
+                <span>门店销售额</span>
+                <span>234.00</span>
+              </div>
+              <div>
+                <span>门店支付订单数</span>
+                <span>231</span>
+              </div>
+            </div>
+            <div class="information" style="margin:41px 0 22px 0;">
+              <img src="../../images/control/2.png" alt="">
+              <div>
+                <span>新增客户</span>
+                <span>23</span>
+              </div>
+              <div>
+                <span>支付客户数</span>
+                <span>33</span>
+              </div>
+            </div>
+          </div>
+          <div class="right">
+            <div class="information" style="margin-top:20px;">
+              <img src="../../images/control/3.png" alt="">
+              <div>
+                <span>网店销售额</span>
+                <span>0.00</span>
+              </div>
+              <div>
+                <span>网店支付订单数</span>
+                <span>1000</span>
+              </div>
+            </div>
+            <div class="information" style="margin:41px 0 22px 0;">
+              <img src="../../images/control/4.png" alt="">
+              <div>
+                <span>新增客户</span>
+                <span>12</span>
+              </div>
+              <div>
+                <span>会员储值金额</span>
+                <span>2312,3340.00</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    
+      <div class="Member_info_Interaction">
+        <div class="Member">
+          <span>会员</span>
+          <div class="Member_info">
+            <div class="total_member" style="background:rgba(92,179,255,1);">
+              <div style="margin-left:12px;">
+                <img src="../../images/control/hy.png" alt="">
+                <span style="font-size:12px;color:#fff;">总会员数</span>
+              </div>
+              <span style="font-size:16px;color:#fff;margin-right:12px;">55669</span>
+            </div>
+            <div class="new_add" style="background:rgba(92,179,255,0.84);">
+              <div style="margin-left:12px;">
+                <img src="../../images/control/add.png" alt="" style="width:10px;">
+                <span style="font-size:12px;color:#fff;">昨日新增</span>
+              </div>
+              <span style="font-size:16px;color:#fff;margin-right:12px;">776</span>
+            </div>
+            <div class="yesterday_active" style="background:rgba(92,179,255,0.64);">
+              <div style="margin-left:12px;">
+                <img src="../../images/control/act.png" alt="" style="width:14px;">
+                <span style="font-size:12px;color:#fff;">昨日活跃</span>
+              </div>
+              <span style="font-size:16px;color:#fff;margin-right:12px;">55669</span>
+            </div>
+          </div>
+        </div>
+        <div class="info">
+          <span>消息</span>
+          <div class="Member_info">
+            <div class="total_member" style="background:rgba(254,139,37,1);">
+              <div style="margin-left:12px;">
+                <img src="../../images/control/dx.png" alt="" style="width:13px;">
+                <span style="font-size:12px;color:#fff;">昨日短信群发</span>
+              </div>
+              <span style="font-size:16px;color:#fff;margin-right:12px;">776</span>
+            </div>
+            <div class="new_add" style="background:rgba(254,139,37,0.84);">
+              <div style="margin-left:12px;">
+                <img src="../../images/control/hd.png" alt="" style="width:12px;">
+                <span style="font-size:12px;color:#fff;">昨日互动群发</span>
+              </div>
+              <span style="font-size:16px;color:#fff;margin-right:12px;">776</span>
+            </div>
+            <div class="yesterday_active" style="background:rgba(254,139,37,0.64);">
+              <div style="margin-left:12px;">
+                <img src="../../images/control/hf.png" alt="" style="width:15px;">
+                <span style="font-size:12px;color:#fff;">昨日回复</span>
+              </div>
+              <span style="font-size:16px;color:#fff;margin-right:12px;">776</span>
+            </div>
+          </div>
+        </div>
+        <div class="Interaction">
+          <span>互动</span>
+          <div class="Member_info">
+            <div class="total_member" style="background:rgba(73,204,147,1);">
+              <div style="margin-left:12px;">
+                <img src="../../images/control/fans.png" alt="" style="width:14px;">
+                <span style="font-size:12px;color:#fff;">近7日客转粉数</span>
+              </div>
+              <span style="font-size:16px;color:#fff;margin-right:12px;">776</span>
+            </div>
+            <div class="new_add" style="background:rgba(73,204,147,0.84);">
+              <div style="margin-left:12px;">
+                <img src="../../images/control/cj.png" alt="" style="width:14px;">
+                <span style="font-size:12px;color:#fff;">近7日会员成交</span>
+              </div>
+              <span style="font-size:16px;color:#fff;margin-right:12px;">￥233,344.00</span>
+            </div>
+            <div class="yesterday_active" style="background:rgba(73,204,147,0.64);">
+              <div style="margin-left:12px;">
+                <img src="../../images/control/fg.png" alt="" style="width:14px;">
+                <span style="font-size:12px;color:#fff;">会员复购率</span>
+              </div>
+              <span style="font-size:16px;color:#fff;margin-right:12px;">23%</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="calendar_all">
           <dl class="calendar">
-            <div style="margin-top:-17px;font-size:16px;font-weight:bold;margin-bottom:30px;margin-top:-9px;">待办提醒</div>
             <dt class="calendar_header">
               <button class="el-picker-panel__icon-btn el-date-picker__prev-btn el-icon-d-arrow-left" @click="preMonth"></button>
               <span class="padding_0_5">{{chooseYear}}</span>年<span class="padding_0_5">{{chooseMonth}}</span>月
@@ -94,7 +254,7 @@
                   <th>五</th>
                   <th>六</th>
                 </tr>
-                <tr v-for="week in mounthList">
+                <tr v-for="(week,index) in mounthList" :key="index">
                   <td 
                   v-for="day in week" 
                   :key="day.chooseDay" 
@@ -105,179 +265,177 @@
               </table>
             </dd>
           </dl>
-          <div class="work_zone">
-            <div class="work_zone_top">
-              <span class="date" style="color:#465669;font-size:14px;font-weight:bold;margin-left:24px;float:left;">{{chooseMonth}}月{{chooseDay}}日</span>
-              <div class="all_thing" style="margin-left:8px;color:#98A9BF;font-size:12px;float:left;">共有<span>{{interviewerInfos.length}}</span>条工作日程</div>
-              <span style="color:#5CB3FF;float:right;margin-right:32px;cursor: pointer;" @click="add_Backlog('','新增待办事项','0')">
-                <i class="iconfont">&#xe675;</i>
-              </span>
-            </div>
-            <div class="work_zone_place_none" v-show="!have_schedule">
-              <div class="none" >
-                <img src="../../images/Dashboard/Page1.png" alt="" style="width:74px;margin-bottom:15px;">
-                <div>今日没有日程，点击右上角<span style="color:#5CB3FF;margin:0 5px;"><i class="iconfont" style="font-size:12px;">&#xe675;</i></span>添加工作日程</div>
+          <div style="width: 23px;min-height: 300px;background: #f5f8fa;z-index: 9;"></div>
+          <div class="calendar_detaily">
+            <span style="font-size:14px;color:rgba(31,45,61,1);line-height:20px;font-weight:bold;margin:18px 0 0 16px;">营销待办</span>
+            <div class="all_activity">
+              <div class="going_activity">
+                <img src="../../images/control/yingxiao1.png" alt="">
+                <span style="margin:24px 0 16px 0;">进行中的营销活动</span>
+                <span style="font-size:16px;color:#5CB3FF;">340</span>
+              </div>
+              <div class="linging_activity">
+                <img src="../../images/control/yingxiao2.png" alt="">
+                <span style="margin:24px 0 16px 0;">待上线营销活动</span>
+                <span style="font-size:16px;color:#49CC93">340</span>
+              </div>
+              <div class="waiting">
+                <img src="../../images/control/yingxiao3.png" alt="">
+                <span style="margin:24px 0 16px 0;">待审核</span>
+                <span style="font-size:16px;color:#FE8B25;">340</span>
               </div>
             </div>
-            <div class="work_zone_place" v-show="have_schedule">
-              <div class="todo_list" v-for="(item,index) in interviewerInfos" @click.prevent="to_resume(item,item.id,item.processStatus)" >
-                <div style="width:95%;">
-                  <span style="color:#5CB3FF;" :class="{'isgray':item.id == -1&&item.processStatus != 4}">{{item.name}}</span>
-                  <span style="margin-left:8px;">{{item.positionName}}</span>
-                  <div style="margin-top:4px;" v-if="item.processStatus == 1">待面试</div>
-                  <div style="margin-top:4px;" v-else-if="item.processStatus == 2">待录用</div>
-                  <div style="margin-top:4px;" v-else-if="item.processStatus == 3">待入职</div>
-                  <div style="margin-top:-16px;display: flex;align-items: center;justify-content: space-between;" v-else="item.processStatus == 4">
-                    <span style="text-align: justify;">{{item.awaitDeal}}</span>
-                    <span style="color:#98A9BF;margin-left:40px;margin-right:32px;cursor: pointer;" @click.stop="delAwaitDeal(item.awaitDealId)">
-                      <i class="iconfont">&#xe749;</i>
-                    </span>
-                  </div>
-                </div>
-              </div> 
+            <div class="look">
+              查看营销中心
             </div>
           </div>
+      </div>
+      <div class="always_function">
+        <span>常用功能</span>
+        <div class="function">
+          <div>
+            <img src="../../images/control/new.png" alt="">
+            <span style="margin-left:10px;">新建商品</span>
+          </div>
+          <div>
+            <img src="../../images/control/coupon.png" alt="">
+            <span style="margin-left:10px;">新建优惠券</span>
+          </div>
+          <div>
+            <img src="../../images/control/discount.png" alt="">
+            <span style="margin-left:10px;">设置满减</span>
+          </div>
+          <div>
+            <img src="../../images/control/eat.png" alt="">
+            <span style="margin-left:10px;">堂食点餐</span>
+          </div>
+          <div>
+            <img src="../../images/control/member.png" alt="">
+            <span style="margin-left:10px;">会员卡</span>
+          </div>
+          <div>
+            <img src="../../images/control/redball.png" alt="">
+            <span style="margin-left:10px;">红包管理</span>
+          </div>        
+        </div>    
+      </div>
+      <div class="always_function">
+        <span>更多服务</span>
+        <div class="more_service">
+          <div>
+            <span>erp</span>
+            <span>移动办公软件</span>
+          </div>
+          <div style="background:rgba(255,147,160,1);">
+            <span>智能收银</span>
+            <span>移动办公软件</span>
+          </div>
+          <div style="background:rgba(139,223,186,1);">
+            <span>小程序</span>
+            <span>移动办公软件</span>
+          </div>
+          <div style="background:rgba(255,181,116,1);">
+            <span>更多</span>
+            <span>移动办公软件</span>
+          </div>      
+        </div>    
+      </div>
+    </div>
+    <div class="recruitment_right">
+      <div class="h_user_information">
+        <div class="user_info">
+          <div style="display:flex;">
+            <img alt="" src="../../images/control/tx.png"> 
+            <div style="margin: 19px 0px 0px 16px;">
+              <div class="user_name" style="font-size: 14px; color: rgb(31, 45, 61); font-weight: bold;">维尼熊</div> 
+              <div class="user_company" style="font-size: 12px; color: rgb(152, 169, 191); margin-top: 8px;">维尼小熊公司</div>
+            </div>            
+          </div>
+          <div class="Edition">专业版</div>
+        </div> 
+        <div class="getPercent">
+          <div class="personal_activity">
+            <div style="margin: 17px 0 0 24px;">红包余额<span style="color:#5CB3FF">9999</span>元</div>
+            <div style="margin: 17px 16px 0 0;color:#5CB3FF;cursor: pointer;">发活动<i class="iconfont" style="font-size:12px;">&#xe62d;</i></div>
+          </div>
+          <div class="personal_activity">
+            <div style="margin: 8px 0 16px 24px;">短信余量 <span style="color:#5CB3FF">999999</span>元</div>
+            <div style="margin: 8px 16px 16px 0;color:#5CB3FF;cursor: pointer;">发活动<i class="iconfont" style="font-size:12px;">&#xe62d;</i></div>
+          </div>
         </div>
+      </div>
 
-      </div>      
-      <div class="Product_dynamics">
-          <div class="product_detaily">
-            <div style="display:flex;justify-content: space-between;padding-right:26px;margin-bottom:16px;">
-              <span style="color:#1F2D3D;font-size:16px;font-weight:bold;margin-left:24px;">产品动态</span>
-              <router-link to="/ATS/product_list">
-                <span style="color:#1F2D3D;font-size:16px;font-weight:bold;letter-spacing: 5px;color:#98A9BF;cursor: pointer;">...</span>
-              </router-link>
-            </div>
-            <div  class="detaily_info" v-for="(item,index) in getProductTrends" :key="index" @click="to_detaily(item)" v-show="prd_ishow">
-              <div style="display:flex;align-items: center;width:60%;">
-                <div class="red_ball" v-show="!item.isRead"></div>
-                <p style="margin-left:10px;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;">{{item.title}}</p>
-              </div>
-              <div class="time">{{item.createTime.split(" ")[0]}}</div>
-            </div>
-            <div class="detaily_info_none" v-show="!prd_ishow">
-              <img src="../../images/Dashboard/Page2.png" alt="" style="width:60px;">
-              <div style="width:100%;margin-top:8px;">还没有产品动态！</div>
-            </div>
+      <section class="store" v-show="store || retail">
+        <div class="add_shop">
+          <img src="../../images/control/shop.png" alt="">
+          <div class="add"><i class="iconfont">&#xe767;</i>添加门店</div>
+        </div>        
+      </section>
+        
+      <section class="Restaurant" v-show="Restaurant">
+        <div class="Printer">
+          <div>
+            <img src="../../images/control/Printer.png" alt="">
+            <span>未连打印机</span>
+          </div>
+          <div>
+            <img src="../../images/control/jd.png" alt="">
+            <span>未自动接单</span>
+          </div>
+        </div>
+      </section>
+
+      <div class="Customer_manager">
+          <img src="../../images/control/kefu.png" alt="">
+          <div class="info">
+            <div><span style="color:#98A9BF;font-size:12px;">客户经理</span><span style="margin-left:12px;">巍然</span></div>
+            <div style="margin-top:13px;"><span style="color:#98A9BF;font-size:12px;">电话客服</span><span style="margin-left:12px;">199 8889 8738</span></div>            
+          </div>
+          <div class="online_kf">
+            <img src="../../images/control/line.png" alt="" style="margin:0 5px 0 0;width:16px;">
+            在线客服
+          </div>
+      </div>
+      <div class="publish">
+        <div style="display:flex;justify-content:space-between;padding-right: 25px;">
+          <span style="color:rgba(31,45,61,1);line-height:24px;font-weight:bold;margin:0 0 0 24px;">公告</span>
+          <span style="color: rgb(152, 169, 191);font-size: 16px;font-weight: bold;letter-spacing: 5px;cursor: pointer;">...</span>
+        </div>
+        <div class="detaily_info">
+            <div style="display: flex; align-items: center; width: 60%;">
+              <div class="red_ball"></div> 
+              <p style="margin-left: 10px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">关于V10.1.0版本更新</p>
+            </div> 
+            <div class="time">2018-05-28</div>
+          </div>
+        <div class="detaily_info">
+            <div style="display: flex; align-items: center; width: 60%;">
+              <div class="red_ball"></div> 
+              <p style="margin-left: 10px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">关于前端框架调整</p>
+            </div> 
+            <div class="time">2018-05-28</div>
           </div>  
-          <div class="download_micro">
-            <div class="micro_img"></div>
-            <div class="Copywriting">
-              <div style="font-size:16px;color:#1F2D3D;">扫码下载爱聚HR小程序</div>
-              <div style="font-size:14px;color:#465669;">随时随地跟进招聘进度</div>
-            </div>
-          </div>    
-      </div>  
-    </div>
-
-    <div class="h_bottom_info">
-      <span style="font-size: 16px;font-weight: bold;position: absolute;top: 16px;left: 20px;">快捷入口</span>
-      <div class="Post" @click="jump_fast('/ATS/recruit/post')" style="margin-left:24px;">
-          <img src="../../images/Dashboard/zw.png" alt="">
-          <span>发布职位</span>         
-      </div>
-      <div class="Post" @click="jump_fast('/ATS/talents/newResume')">
-        <img src="../../images/Dashboard/Group.png" alt="">
-        <span>导入简历</span>
-      </div>
-      <div class="Post" @click="settalentStatus(1,'talentpool')">
-        <img src="../../images/Dashboard/Group10.png" alt="">
-        <span>发offer</span>
-      </div>
-      <div class="Post" @click="jump_fast('/ATS/creatMiniWeb')">
-        <img src="../../images/Dashboard/Group13.png" alt="">
-        <span>公司主页</span>
-      </div>
-      <div class="Post" @click="jump_fast('/miniIndex')">
-        <img src="../../images/Dashboard/Group14.png" alt="">
-        <span>小程序</span>
-      </div>
-      <div class="Post" @click="jump_fast('/ATS/recommendPost')">
-        <img src="../../images/Dashboard/Group17.png" alt="">
-        <span>招聘活动</span>
-      </div>
-      <div class="Post" @click="jump_fast('/channelSet')">
-        <img src="../../images/Dashboard/Group18.png" alt="">
-        <span>绑定渠道</span>
-      </div>
-      <div class="Post" @click="jump_fast('/envelopeMain')" style="margin-right:24px;">
-        <img src="../../images/Dashboard/Group21.png" alt="">
-        <span>充值中心</span>
+        <div class="detaily_info">
+            <div style="display: flex; align-items: center; width: 60%;">
+              <div class="red_ball"></div> 
+              <p style="margin-left: 10px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">关于前端框架调整</p>
+            </div> 
+            <div class="time">2018-05-28</div>
+        </div>            
       </div>
     </div>
-    
-    <!-- <el-button type="text" @click="add_Backlog"></el-button> -->
-    <!-- <el-row :gutter="20">
-      <el-col :span="12" class="">
-        <div class="position_management">
-          <h2>职位管理</h2>
-          <el-row class="management_top">
-            <el-col :span="12">
-              <h6>在招职位数</h6>
-              <p @click="toList">{{recruitIndexInfo.recruitingPositionMap.recruitingPositionCount}}</p>
-            </el-col>
-            <el-col :span="12">
-              <dl class="issue_resume" @click="toPost">
-                <dt>添加新职位</dt>
-                <dd><i class="iconfont">&#xe767;</i></dd>
-              </dl>
-            </el-col>
-          </el-row>
-          <el-row class="add_resume_header">
-            <el-col :span="20">在招职位</el-col>
-            <el-col :span="4" class="icon" @click.native="toList" title="查看更多"><i class="iconfont">&#xe622;</i></el-col>
-          </el-row>
-          <el-row class="add_resume_con" v-for="(position,index) in recruitIndexInfo.recruitingPositionMap.recruitingPositionList" :key="position.id" v-if="index<3">
-            <el-col :span="10" class="white-space-nowrap">{{position.positionName}}</el-col>
-            <el-col :span="4" class="white-space-nowrap">{{position.workCity?position.workCity:'不限'}}</el-col>
-            <el-col :span="10" class="white-space-nowrap">{{position.posiPublishTime?position.posiPublishTime.substring(0,10):''}}</el-col>
-          </el-row>
-        </div>
-      </el-col>
-      <el-col :span="12" class="">
-        <div class="position_management">
-          <h2>招聘管理</h2>
-          <el-row class="management_top">
-            <el-col :span="12">
-              <h6>新增投递量</h6>
-              <p @click="toNewResume">{{recruitIndexInfo.todaysResumeMap.newResumeCount}}</p>
-            </el-col>
-            <el-col :span="12">
-              <h6>未查阅投递量</h6>
-              <p @click="toNewResume">{{recruitIndexInfo.unreadResumeCount}}</p>
-            </el-col>
-          </el-row>
-          <el-row class="add_resume_header">
-            <el-col :span="20">新增简历</el-col>
-            <el-col :span="4" class="icon" @click.native="toNewResume" title="查看更多"><i class="iconfont">&#xe622;</i></el-col>
-          </el-row>
-          <el-row class="add_resume_con" v-for="(newResume,index) in recruitIndexInfo.todaysResumeMap.newResumeList" ::key="newResume.id" v-if="index<3">
-            <el-col :span="10" class="white-space-nowrap">{{newResume.positionName}}</el-col>
-            <el-col :span="4" class="white-space-nowrap">{{newResume.name}}</el-col>
-            <el-col :span="10" class="white-space-nowrap" v-if="newResume.workYear">{{newResume.workYear}}年工作经历</el-col>
-          </el-row>
-          <el-row class="add_resume_con" v-if="recruitIndexInfo.todaysResumeMap.newResumeList==null||recruitIndexInfo.todaysResumeMap.newResumeList.length==0">
-            <el-col :span="24" class="color_99a9bf">今日暂无新投递简历</el-col>
-          </el-row>
-        </div>
-      </el-col>
-    </el-row> -->
   </div>
 </template>
 <script>
-export default {
-  name:'recruitment',
-  data(){
+  export default {
+  name: "recruitment",
+  data() {
     var nowYear=new Date().getFullYear();
     var nowMonth=(new Date().getMonth()+1)<10?'0'+(new Date().getMonth()+1):(new Date().getMonth()+1);
     var nowDay=(new Date().getDate())<10?'0'+(new Date().getDate()):(new Date().getDate());
-    return{
-      have_schedule:false,//待办事项
-      getRecruitmentProgress:{},
-      getPersonalInfo:{},
-      getPercent:{},
-      interviewerInfos:[],
-      activeName:'1',
+    return {
+      value4:false,
+      value3:false,
       chooseDateVal:nowYear+'-'+nowMonth+'-'+nowDay,
       chooseMonth:nowMonth,
       chooseYear:nowYear,
@@ -287,188 +445,44 @@ export default {
       nowYear:'',
       nowMonth:'',
       nowDay:'',
-      page1:{
-        pageSize:8,
-        pageNum:1,
-        totalCount:0
-      },
-      page2:{
-        pageSize:8,
-        pageNum:1,
-        totalCount:0
-      },
-      page3:{
-        pageSize:8,
-        pageNum:1,
-        totalCount:0
-      },
-      getProductTrends:[],//产品动态
-      awaitHireRecords:[],//待录用
-      awaitEntryRecords:[],//待入职
-      awaitInterviewRecords:[],//待面试
-      recruitIndexInfo:{
-        recruitingPositionMap:{},
-        todaysResumeMap:{},
-        unreadResumeCount:0
-      },
-      prd_ishow:true,
-      Copywriting:"新建待办事项",
-    }
-  },
-  mounted(){
-    this.getDateList();
-    this.index();
-    this.interviewArrangement();
-  },
-  created(){
-    this.Recruitment_progress();//获取招聘进展
-    this.getpersonal_info();//获取个人信息
-    this.get_Percent();//获取率
-    this.get_ProductTrends();//产品动态
-  },
-  methods:{
-  jump_fast(src){
-    this.$router.push(src);
-  },
-  to_detaily(item){
-      localStorage.setItem("detaily",JSON.stringify(item));
-      var _this = this;
-      var method = "dashBoard/getProductTrendInfo";
-      var param = JSON.stringify({
-        id:item.id
-      });
-      var successd = function(res) {
-        console.log(res);
-      };
-      _this.$http(method, param, successd);
-      this.$router.push({"path":'/ATS/detaily'})
-  },
-  get_ProductTrends(){
-    var _this = this;
-    var method = "dashBoard/getProductTrends";
-    var param = JSON.stringify({
-      pageNum: 1,
-      pageSize: 10
-    });
-    var successd = function(res) {
-      _this.getProductTrends = res.data.data.productTrends.slice(0,4);
-      console.log(_this.getProductTrends)
-      _this.getProductTrends.length == 0 ? _this.prd_ishow=false : _this._prd_ishow=true;
+      type:this.$route.query.type,
+      Restaurant:false,
+      store:false,
+      retail:false
     };
-    _this.$http(method, param, successd);
   },
-  delAwaitDeal(data) {
-    var _this = this;
-    this.$confirm('此操作将永久删除该事项, 是否继续?', '提示', {
-      confirmButtonText: '确定',
-      cancelButtonText: '取消',
-      type: 'warning'
-    }).then(() => {
-      var method="dashBoard/delAwaitDeal",
-      param = JSON.stringify({
-        id : data
-      }),
-      successd = function(res) {
-        if(res.data.code == "0"){
-          _this.$message({
-            type: 'success',
-            message: '删除成功'
-          });
-          _this.interviewArrangement();
-          _this.getDateList();
-        }
+  created () {
+    this.which_load();
+  },
+  mounted: function() {
+    // this.getDateList();
+    
+  },
+  methods: {
+    Takeoutfood_status(value){
+
+    },
+    dinner(){
+
+    },
+    which_load(){
+      switch (this.type) {
+        case '0'://门店
+          this.store = true; 
+          break;
+        case '1'://餐饮
+          this.Restaurant = true;
+          break;
+        case '2'://零售
+          this.retail = true;
+          break;
+        default:
+          break;
       }
-      _this.$http(method,param,successd);
-    }).catch(() => {
-      this.$message({
-        type: 'info',
-        message: '已取消删除'
-      });          
-    });
     },
-    add_Backlog(oridinary,Copywriting,id) {
-      var _this = this;
-      this.$prompt('待办事项内容', Copywriting, {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
-        inputValue:oridinary
-      }).then(({ value }) => {
-          if( value.length > 100 ){
-            _this.$message({
-              type: 'success',
-              message: '工作日程字数不得超过100字！'
-            });
-          } else {
-            var method="dashBoard/editorAwaitDeal",
-            param = JSON.stringify({
-              id:id,
-              content:value,
-              dealDate:_this.chooseDateVal
-            }),
-            successd = function(res) {
-              if(res.data.code == "0"){
-                _this.$message({
-                  type: 'success',
-                  message: '操作成功'
-                });
-                _this.interviewArrangement();
-                _this.getDateList();
-              }
-            }
-            _this.$http(method,param,successd);            
-          }
-      }).catch(() => {
-        this.$message({
-          type: 'info',
-          message: '取消输入'
-        });       
-      });
-    },
-    settalentStatus(data,src){
-      localStorage.talentStatus = data;
-      this.$router.push({name:src});
-    },
-    setlibrary(data,src){
-      localStorage.library = data;
-      this.$router.push({name:src});
-    },
-    Recruitment_progress(){
-      var _this = this;
-      var method="dashBoard/getRecruitmentProgress",
-          param = JSON.stringify({}),
-          successd = function(res) {
-            if(res.data.code == "0"){
-              _this.getRecruitmentProgress = res.data.data;
-            }
-          }
-      _this.$http(method,param,successd);
-    },
-    getpersonal_info(){
-      var _this = this;
-      var method="dashBoard/getPersonalInfo",
-          param = JSON.stringify({}),
-          successd = function(res) {
-            if(res.data.code == "0"){
-              _this.getPersonalInfo = res.data.data;
-            }
-          }
-      _this.$http(method,param,successd);
-    },
-    get_Percent(){
-      var _this = this;
-      var method="dashBoard/getPercent",
-          param = JSON.stringify({}),
-          successd = function(res) {
-            if(res.data.code == "0"){
-              _this.getPercent = res.data.data;
-            }
-          }
-      _this.$http(method,param,successd);
-    },
-    //获取日历
     getDateList(){
       var self=this;
-      var method="promotionPage/haveRecordDates",
+      var method="store/haveRecordDates",
           param=JSON.stringify({
             chooseMonth:self.chooseMonth,
             chooseYear:self.chooseYear
@@ -494,60 +508,14 @@ export default {
             }
             self.nowMounths=JSON.parse(JSON.stringify(nowMounths));
             self.mounthList=new Array();
+            console.log(self.mounthList)
             for(var i=0;i<6;i++){
               if(nowMounths.length>0){
                 self.mounthList.push(nowMounths.splice(0,7));
               }
             }
-            // console.log(self.mounthList);
-            // console.log(self.nowMounths);
           };
       self.$http(method,param,successd);
-    },
-    index(){
-      var self=this;
-      var method="recruitIndexInfo/getRecruitIndexInfo",
-          param=JSON.stringify({}),
-          successd=function(res){
-            self.recruitIndexInfo=res.data.data;
-          };
-      self.$http(method,param,successd);
-    },
-    interviewArrangement(){
-      var self=this;
-      var method="promotionPage/interviewArrangement",
-          param=JSON.stringify({
-            selectDate:self.chooseDateVal
-          }),
-          successd=function(res){
-            self.interviewerInfos = res.data.data.interviewerInfos;
-            if(self.interviewerInfos.length != 0){
-              self.have_schedule = true;
-            } else {
-              self.have_schedule = false;
-            }
-            // self.awaitInterviewRecords=res.data.data.awaitInterviewRecords;//待面试
-            // self.page1=res.data.data.awaitInterviewRecordsPage;
-            // self.awaitHireRecords=res.data.data.awaitHireRecords;//待录用
-            // self.page2=res.data.data.awaitHireRecordsPage;
-            // self.awaitEntryRecords=res.data.data.awaitEntryRecords;//待入职
-            // self.page3=res.data.data.awaitEntryRecordsPage;
-          };
-      self.$http(method,param,successd);
-    },
-    chooseDate(day){
-      // console.log(day)
-      var self=this;
-      if(!day.current){return false}
-      self.chooseYear=day.chooseYear;
-      self.chooseMonth=day.chooseMonth;
-      self.chooseDay=day.chooseDay;
-      self.chooseDateVal=day.chooseYear+'-'+day.chooseMonth+'-'+day.chooseDay;
-      self.nowMonth=day.chooseMonth;
-      self.nowYear=day.chooseYear;
-      self.nowDay=day.chooseDay;
-      // console.log(self.chooseDateVal);
-      self.interviewArrangement();
     },
     preMonth(){//上一月
       this.chooseDateVal=new Date(new Date(this.chooseDateVal).getTime()-30*24*60*60*1000);
@@ -567,391 +535,509 @@ export default {
       this.getDateList();
       this.interviewArrangement();
     },
-    toPost(){
-      this.$router.push({name:'publishPosition'});
+    chooseDate(day){
+      // console.log(day)
+      var self=this;
+      if(!day.current){return false}
+      self.chooseYear=day.chooseYear;
+      self.chooseMonth=day.chooseMonth;
+      self.chooseDay=day.chooseDay;
+      self.chooseDateVal=day.chooseYear+'-'+day.chooseMonth+'-'+day.chooseDay;
+      self.nowMonth=day.chooseMonth;
+      self.nowYear=day.chooseYear;
+      self.nowDay=day.chooseDay;
+      // console.log(self.chooseDateVal);
+      self.interviewArrangement();
     },
-    toList(){
-      this.$router.push({name:'publishList'});
-    },
-    toNewResume(){
-      this.$router.push({name:'newResume'});
-    },
-    changePageNum1(val){
-      this.page1.pageNum=val;
-      this.interviewArrangement;
-    },
-    changePageNum2(val){
-      this.page2.pageNum=val;
-      this.interviewArrangement;
-    },
-    changePageNum3(val){
-      this.page3.pageNum=val;
-      this.interviewArrangement;
-    },
-    resume(id,btnShow,type){
-      if(type=='entry' && id==0){
-        this.$router.push({name:'talentpool'});
-        localStorage.talentStatus=3;
-        return
-      }
-      this.$router.push({name:'resume',query:{id:id,btnShow:btnShow}})
-    },
-    to_resume(content,id,processStatus){
-      switch (processStatus) {
-        case 1: //  待面试
-          if(id != -1){
-            this.$router.push({name:'resume',query:{id:id,btnShow:3}})
-          }
-          break;
-        case 2://  待录用
-          if (id != -1) {
-            this.$router.push({name:'resume',query:{id:id,btnShow:5}})
-          }
-          break;
-        case 3://  已入职
-          if (id != -1) {
-            this.$router.push({name:'resume',query:{id:id,btnShow:5}})
-          }
-          break;
-        case 4://  待办事项
-          this.add_Backlog(content.awaitDeal,'编辑待办事项',content.awaitDealId);
-          break;
-        default:
-          break;
-      }
+    interviewArrangement(){
+      console.log(this.chooseDateVal)
     }
   },
-  components:{
+  watch: {
     
-  }
-}
+  },
+};
 </script>
-
 <style scoped>
-.recruitment h1{font-size: 16px;font-weight: 500;margin:0 0 20px 20px;overflow: hidden;}
-.recruitment_header{
+  .member_num .information{
+    display: flex;
+    align-items: center;
+    margin-left:24px!important;
+  }
+  .member_num .information div{
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+    margin-left:24px;
+    width:30%;
+  }
+  .member_num .information div:last-child{
+    margin-left:15%;
+  }
+  .member_num .information div span:last-child{
+    font-size:16px;
+    color:rgba(31,45,61,1);
+    line-height:22px;
+    margin-top:8px;
+    font-weight: bold;
+  }
+  .member_num{
+    display: flex;
+    font-size:14px;
+    color:rgba(31,45,61,1);
+    line-height:20px;
+  }
+  .member_num>div img{
+    width:48px;
+  }
+  .member_num>div{
+    width:50%;
+  }
+  .Member_zone{
+    width:100%;
+    background: #fff;
     overflow: hidden;
-}
-.calendar{width:333px;min-height: 280px;float: left;margin-top:25px;padding: 0 20px;}
-.calendar_header{text-align: center;margin:12px;line-height: 22px;}
-.calendar_con{text-align: center;}
-.right_con{margin-left: 290px;height: 280px;border-left:1px solid #1F2D3D;}
-.el-tabs{clear:none;}
-.deal_interview{display: inline-block;margin: 0px 30px 15px 20px;cursor: pointer;}
-.deal_interview dt {width:60px;height:60px;border-radius: 50%;overflow: hidden;float: left;}
-.deal_interview dt img{width:60px;height: 60px;vertical-align: top;}
-.deal_interview dd{margin-left: 80px;height: 60px;font-size: 14px;margin-top: 10px;}
-.deal_interview dd h2,.deal_interview dd p{font-size: 14px;font-weight: 500;width: 112px;overflow: hidden;text-overflow:ellipsis;white-space:nowrap; }
-.position_management{height:310px;background-color: #fff;box-shadow: 1px 1px 10px 1px #eee;}
-.position_management h2{height: 50px;border-bottom: 1px solid #E5E9F2;color: #1F2D3D;font-size: 16px;line-height: 50px;padding-left: 20px;font-weight: 500;}
-.management_top{text-align: center;height: 100px}
-.management_top h6{font-size: 14px;font-weight: 500;margin: 20px 0 10px;}
-.management_top p{font-size: 36px;color: #5aa2e7;cursor: pointer;}
-.add_resume_header{margin: 10px 20px;height: 40px;;line-height: 40px;font-size: 16px;border-bottom: 1px solid #eee;}
-.add_resume_header .icon{text-align: right;cursor: pointer;}
-.add_resume_header .icon .iconfont{font-size: 24px;}
-.add_resume_con{height: 30px;line-height: 30px;margin: 0 20px;}
-.issue_resume{width: 75px;height: 75px;background-color: #46BE8A;color:#fff;border-radius: 4px;margin: 15px auto 0;line-height: 30px;cursor: pointer}
-.issue_resume dt{padding-top:10px;}
-.issue_resume dd{line-height: 24px;}
-.issue_resume dd .iconfont{font-size: 28px;}
-
-.el-date-table td{position: relative;}
-.el-date-table .disabled{
-  background: #F4F4F4;
-  cursor: not-allowed;
-}
-.hasRecord:after{content:'';width:4px;height:4px;border-radius: 50%;background-color: #ff4949;display: block;position: absolute;bottom: 3px;left: 50%;margin-left: -2px;}
-.white-space-nowrap{white-space:nowrap;overflow: hidden;}
-.no_data{height: 200px;text-align: center;color: #99a9bf;background: url(../../images/noData.png) no-repeat center center}
-.no_data p{padding-top:20px;margin-left: -20px;}
-.h_top_info{
-  display: flex;
-  justify-content: space-between;
-  overflow: hidden;
-}
-.h_middle_info{
-      margin-top: 24px;
-  display: flex;
-  justify-content: space-between;
-  overflow: hidden;
-}
-.h_recruitment_progress{
-  overflow: hidden;
-  width: 69%;
-  height: 166px;
-  background-color: #fff;
-}
-.recruitment_progress_detaily{
-  /* padding-left: 24px; */
-  margin-top: 16px;
-  display: flex;
-  justify-content: center;
-}
-.recruitment_progress_detaily .detaily{
-  width: 15.5%;
-  height: 96px;
-  background: #F2F6FC;
-  border-right: 1px solid #fff;
-  margin-bottom: 16px;
-  cursor: pointer;
-}
-.recruitment_progress_detaily .detaily:hover{
-  color:#5CB3FF;
-}
-.recruitment_progress_detaily .detaily:hover a{
-  color:#5CB3FF;
-}
-.recruitment_progress_detaily .detaily div{
-  width: 100%;
-  text-align: center;
-  font-size: 16px;
-}
-.recruitment_progress_detaily .detaily .num{
-  margin-top: 20px;
-  font-size: 24px;
-  font-weight: bold;
-}
-.recruitment_progress_detaily .detaily .class{
-  margin-top: 8px;
-  font-family: 'PingFangSC-Regular';
-}
-.h_user_information{
-  overflow: hidden;
-  width: 29%;
-  background-color: #fff;
-  box-sizing: border-box;
-}
-.h_user_information .user_info{
-  overflow: hidden;
-  width: 100%;
-  height: 50%;
-  border-bottom: 1px solid #EBEEF5;
-  display: flex;
-}
-.h_user_information .user_info img{
-  width: 48px;
-  height: 48px;
-  border-radius: 50%;
-  background-size: 100% 100%;
-  background-repeat: no-repeat;
-  margin-top: 16px;
-  margin-left: 24px;
-}
-.getPercent{
-  display: flex;
-  text-align: center;
-}
-.getPercent .percent{
-  width: 33.3%;
-  font-size: 14px;
-}
-.getPercent .percent .percent_detaily{
-  color: #1F2D3D;
-  font-weight: bold;
-  margin-top: 18px;
-}
-.getPercent .percent .percent_introduce{
-  color: #465669;
-  margin-top: 10px;
-}
-.hrm_module{
-  border-bottom: none;
-  width: 69%;
-}
-.hrm_module .hrm_module_con{
-  padding: 0;
-  /* margin-top: 20px; */
-  display: flex;
-  background: #fff;
-}
-.work_zone{
-  width: 100%;
-  min-height: 305px;
-  border-left: 1px solid #EBEEF5;
-}
-.work_zone_top{
-  height: 44px;
-  line-height: 44px;
-  border-bottom: 1px solid #EBEEF5;
-}
-.work_zone_place{
-  width: 100%;
-  overflow-x: hidden;
-  overflow-y: scroll;
-  height: 240px;  
-}
-.work_zone_place .todo_list{
-    cursor: pointer;
+  }
+  .Printer>div{
+    width:50%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  .Printer>div img{
+    width:24px;
+    margin-bottom: 8px;
+  }
+  .Printer{
+    display: flex;
+    width:100%;
+    height:69px;
+    background: #fff;
+    margin-top:24px;
+    font-size:12px;
+    color:rgba(70,86,105,1);
+    line-height:17px;
+  }
+  .Receipt .Deliver_goods{
+    width: 89.5%;
+    height:40px;
+    border:1px solid rgba(228,231,237,1);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin:16px auto;
+    border-left: 4px solid rgba(228,231,237,1);
+  }
+  .Receipt .Deliver_goods.active{
+    border-left: 4px solid #5CB3FF;
+  }
+  .food>div{
+    width:50%;
+    overflow: hidden;
+  }
+  .food .Takeoutfood .Takeoutfood_status{
+    display: flex;
+    margin: 16px 0 0 24px;
+  }
+  .Restaurant .food{
+    width:100%;
+    height:164px;
+    background: #fff;
+    margin-top: 18px;
+    display: flex;
+  }
+  .red_ball{
+    width: 6px;
+    height: 6px;
+    background: #FF566B;
+    border-radius: 50%;
+    position: absolute;
+  }
+  .detaily_info{
+      display: -ms-flexbox;
+      display: flex;
+      -ms-flex-pack: justify;
+      justify-content: space-between;
+      padding-right: 26px;
+      padding-left: 24px;
+      color: #475669;
+      font-size: 14px;
+      margin-top: 8px;
+      cursor: pointer;
+      position: relative;
+  }
+  .detaily_info:hover {
+      color: #5CB3FF;
+  }
+  .publish{
     width: 100%;
+    background: #fff;
+    overflow: hidden;
+    margin-top: 24px;
+    padding-top: 17px;
+    padding-bottom: 16px;
+  }
+  .online_kf{
+    width:85px;
+    height:27px;
+    background:rgba(255,255,255,1);
+    border-radius:4px;
+    border:1px solid rgba(220,223,230,1);
+    float: right;
+    font-size:12px;
+    color:rgba(92,179,255,1);
+    text-align: center;
+    line-height: 27px;
+    cursor: pointer;
+    position: absolute;
+    top: 24px;
+    right: 16px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .Customer_manager{
+    width: 100%;
+    height: 109px;
+    background: #fff;
+    margin-top: 24px;
+    overflow: hidden;
+    position: relative;
+  }
+  .Customer_manager img{
+    float: left;
+    margin: 29px 16px 0 22px;
+  }
+  .Customer_manager .info{
+    margin-top: 24px;
+    overflow: hidden;
+  }
+  .add_shop{
+    width: 100%;
+    height:69px;
+    background:rgba(255,181,116,0.16);
+    margin-top: 24px;
+    display: flex;
+    align-items: center;
+  }
+  .add_shop img{
+    width:50px;
+    margin-left:23px;
+  }
+  .add_shop .add{
+    margin-left:23px;
+    width:85px;
+    height:27px;
+    background:rgba(255,255,255,1);
+    border-radius:4px;
+    border:1px solid rgba(220,223,230,1);
+    text-align: center;
+    line-height: 27px;
+    cursor: pointer;
+  }
+  .personal_activity{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    color: #1F2D3D;
+    color:rgba(31,45,61,1);
+  }
+  .Edition{
+    width:58px;
+    height:28px;
+    background:rgba(92,182,255,1);
+    border-radius:5px;
+    font-size:14px;
+    font-family:PingFangSC-Regular;
+    color:rgba(255,255,255,1);
+    line-height:28px;
+    text-align: center;
+    margin: 16px 16px 0 0;
+  }
+  .more_service>div span:first-child{
+    font-size: 16px;
+    margin-top: 40px;
+  }
+  .more_service>div span:last-child{
+    font-size: 16px;
+    margin-top: 7px;
+  }
+  .more_service>div{
+    cursor: pointer;
+    width: 22%;
+    height: 121px;
+    background: #97CEFF;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    font-size: 14px;
+    font-family: PingFangSC-Regular;
+    color: rgba(255,255,255,1);
+  }
+  .look{
+    width:118px;
+    height:32px;
+    background:rgba(92,179,255,1);
+    border-radius:4px;
+    font-size:14px;
+    color:rgba(255,255,255,1);
+    line-height:32px;
+    text-align: center;
+    float: right;
+    margin: 16px;
+    cursor: pointer;
+  }
+  .always_function .function,.more_service{
+    display: flex;
+    justify-content: space-between;
+    margin-top: 16px;
+  }
+  .always_function .function>div{
+    width:14.3%;
+    height:52px;
+    border-radius:5px;
+    border:1px solid #EBEEF5;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+  }
+  .always_function{
+    background: #fff;
+    margin-top:24px;
+    overflow: hidden;
+    padding: 18px 24px 24px 24px;
+    font-size:14px;
+    color:rgba(31,45,61,1);
+    line-height:20px;
+  }
+  .all_activity{
+    display: flex;
+    justify-content: space-between;
+    padding: 16px;
+  }
+  .all_activity>div{
+    width:29%;
+    min-height: 180px;
+    background: #F8F8F8;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    font-size:14px;
+    color:rgba(70,86,105,1);
+    line-height:20px;
+    justify-content: center;
+    align-items: center;
+  }
+  .calendar_detaily{
+    overflow: hidden;
+    width:74%;
+    padding-top:18px;
+  }
+  .calendar_all{
+    display: flex;
+    background: #fff;
+    width: 100%;
+    margin-top: 24px;
+    overflow: hidden;
+  }
+  #recruitment{
+    display: flex;
+  }
+  .recruitment_left{
+    width:66%;
+    background: #f5f8fa;
+    overflow: hidden;
+  }
+  .recruitment_right{
+    width:28%;
+    background: #f5f8fa;
+    margin-left: 24px;
+  }
+  .Order_info{
+    width:20%;
+    height:96px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border-right:1px solid #F2F6FC;
+  }
+  .Order{
+    display: flex;
+    background: #fff;
+  }
+  .Order .Order_info_num{
+    font-size:24px;
+    color:rgba(31,45,61,1);
+    line-height:29px;
+  }
+  .Order .Order_info span:last-child{
+    font-size:14px;
+    color:#465669;
+    line-height:20px;
+    margin-top: 8px;
+  }
+  .Member_info_Interaction{
+    margin-top: 24px;
+    background: #fff;
+    display: flex;
+    justify-content: space-between;
+    padding-top: 16px;
+  }
+  .Member_info_Interaction>div>span{
+    display: block;
+    font-size:14px;
+    color:rgba(31,45,61,1);
+    line-height:20px;
+    font-weight: bold;
+    padding-bottom: 16px;
+    text-align: center;
+  }
+  .Member_info_Interaction>div{
+    padding-bottom: 16px;
+    width: 30%;
+  }
+  .Member_info>div{
+    height:40px;
+    background: #ccc;
+    display: flex;
+    line-height: 40px;
+    justify-content: space-between;
+  }
+  .Member_info_Interaction .Member{
+    margin-left:24px;
+  }
+  .Member_info_Interaction .Interaction{
+    margin-right:24px;
+  }
+  .calendar_header{
+    text-align: center;
+    margin: 12px;
+    line-height: 22px;
+  }
+  .calendar{
+    width: 25.3%;
+    
+    margin-top: 26px;
+    margin-bottom: 28px;
+    padding: 0 20px;
+  }
+  .calendar .el-date-table td{
+    padding: 8px 0;
+    width:40px;
+  }
+  .calendar .el-date-table th{
+    padding: 8px 0;
+    width: 40px;
+    height: 30px;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    text-align: center;
+    cursor: pointer;
+    position: relative;
+  }
+  .calendar .el-date-table td:hover {
+    color: #ccc!important;
+  }
+  .calendar .hasRecord:after {
+      content: '';
+      width: 4px;
+      height: 4px;
+      border-radius: 50%;
+      background-color: #ff4949;
+      display: block;
+      position: absolute;
+      bottom: 3px;
+      left: 50%;
+      margin-left: -2px;
+  }
+  .calendar .current{
+    background: #5aa2e7;
+  }
+  .el-date-table .disabled{
+      background: #F4F4F4;
+      cursor: not-allowed;
+  }
+  .h_user_information {
+    overflow: hidden;
+    background-color: #fff;
+    box-sizing: border-box;
+  }
+  .h_user_information .user_info{
+    overflow: hidden;
+    width: 100%;
+    height: 82px;
     border-bottom: 1px solid #EBEEF5;
     display: -ms-flexbox;
     display: flex;
-    -ms-flex-align: center;
-    align-items: center;
-    padding-left: 24px;
-    font-size: 14px;
-    color: #465669;
-    padding-top: 12px;
-    padding-bottom: 12px;
-}
-.isgray{
-  color:#b3b5b9!important;
-}
-.work_zone_place_none{
-  width: 100%;
-  overflow-x: hidden;
-  overflow-y: scroll;
-  height: 270px;  
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-.work_zone_place_none .none{
-  display: flex;
-  flex-direction: column;
-  text-align: center;
-  align-items: center;
-  color: #C0CCDA;
-  font-size: 12px;
-}
-.Product_dynamics{
-    overflow: hidden;
-    width: 29%;
-    box-sizing: border-box;
-    height: 305px;
-    display: flex;
-    flex-direction: column;
     justify-content: space-between;
-}
-.Product_dynamics .product_detaily{
-    padding-top: 16px;
-    overflow: hidden;
-    width: 100%;
-    background: #fff;
-    padding-bottom: 16px;
-    min-height:138px;
-}
-.Product_dynamics .red_ball{
-  width: 6px;
-  height: 6px;
-  background: #FF566B;
-  border-radius: 50%;
-  position: absolute;
-}
-.detaily_info{
+  }
+  .h_user_information .user_info img {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    margin-top: 16px;
+    margin-left: 24px;
+  }
+  .getPercent{
     display: flex;
-    justify-content: space-between;
-    padding-right: 26px;
-    padding-left: 24px;
-    color: #475669;
-    font-size: 14px;
-    margin-top: 8px;
-    cursor: pointer;
-    position: relative;
-}
-.detaily_info:hover{
-  color:#5CB3FF;
-}
-.download_micro{
-  width: 100%;
-  background: #fff;
-  height: 102px;
-  display: flex;
-  /* justify-content: center; */
-  align-items: center;
-  padding-left: 24px;
-}
-.download_micro .micro_img{
-  width: 56px;
-  height: 56px;
-  border:1px solid #EBEEF5;
-  background: url("../../images/Dashboard/micro.jpg");
-  background-size: 100% 100%;
-  background-repeat: no-repeat;
-}
-.Copywriting{
-    margin-left: 16px;
-    color: rgb(31, 45, 61);
-    font-size: 16px;
-    height: 58px;
-    display: flex;
+    text-align: center;
     flex-direction: column;
-    justify-content: space-around;
-}
-.h_bottom_info{
-  position: relative;
-  height: 130px;
-  background:#fff;
-  overflow: hidden;
-  padding-top: 16px;
-  display: flex;
-  align-items: center;
-  justify-content: space-around;
-}
-.h_bottom_info>div{
-    cursor: pointer;
-    height: 52px;
-    border: 1px solid #DCDFE6;
-    border-radius: 5px;
-    display: -ms-flexbox;
-    display: flex;
-    -ms-flex-pack: center;
-    justify-content: center;
-    -ms-flex-align: center;
-    align-items: center;
+  }
+  .getPercent .percent {
+    width: 33.3%;
     font-size: 14px;
-    color: #465669;
-    width: 11%;
-}
-.h_bottom_info img{
-  width: 16px;
-}
-.h_bottom_info>div span{
-  margin-left: 12px;
-}
-
-a {
-    color: #2c3e50;
-    text-decoration: none;
-}
-.detaily_info_none{
-  display:flex;
-  justify-content:center;
-  flex-direction:column;
-  align-items: center;
-  text-align: center;
-  color:#C0CCDA;
-  min-height: 140px;
-}
-.current{
-  background:#5aa2e7;
-}
-.el-date-table td:hover{
-  color:#ccc!important;
-}
-::-webkit-scrollbar   
-{   
-    width: 8px;   
-    height: 16px;   
-    background-color: #F2F6FC;   
-}   
-     
-/*定义滚动条轨道 内阴影+圆角*/   
-::-webkit-scrollbar-track   
-{   
-    /* -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);    */
-    border-radius: 10px;   
-    background-color: #FAFAFA;   
-}   
-     
-/*定义滑块 内阴影+圆角*/   
-::-webkit-scrollbar-thumb   
-{   
-    border-radius: 10px;   
-    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.1);   
-    background-color: #C3C3C3;   
-}   
+  }
+  .getPercent .percent .percent_detaily{
+      color: #1F2D3D;
+      font-weight: bold;
+      margin-top: 18px;
+  }
+  .getPercent .percent .percent_introduce{
+      color: #465669;
+      margin-top: 10px;
+  }
+  .Member_info_Interaction img{
+    width: 16px;
+  }
+  .calendar_detaily img{
+    width: 35px;
+  }
 </style>
-
-
+<style>
+  .food .Takeoutfood .Takeoutfood_status .el-switch__label.is-active{
+    color: #fff;
+  }
+  .food .el-switch__label--left{
+    margin-right: -19px;
+    z-index: 9;
+    position: relative;
+    color:#fff;
+    font-size:12px;
+  }
+  .food .el-switch__label--right{
+    margin-left: -19px;
+    z-index: 9;
+    position: relative;
+    color:#fff;
+    font-size:12px;
+  }
+  .food .el-switch__core{
+    width:44px!important;
+    height:22px;
+  }
+  .food .el-switch.is-checked .el-switch__core::after{
+    margin-left: -19px;
+    width:18px;
+    height:18px;
+  }
+  .food .el-switch__core:after{
+        width:18px;
+    height:18px;
+  }
+</style>

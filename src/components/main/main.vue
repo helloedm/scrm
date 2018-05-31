@@ -3,14 +3,14 @@
     <div class="app_nav">
 			<div class="app_nav_logo">
         <img src="../../images/logo_04.png" alt="">
-        <span style="margin-left:8px;padding-top:5px;">微招聘，用爱聚</span>
+        <span style="margin-left:8px;padding-top:5px;color:#fff;">微招聘，用爱聚</span>
       </div>
-      <div class="app_nav_access">
+      <!-- <div class="app_nav_access">
         <span v-for="(item,index) in leftMenuList" v-if="index<3" :key="item.id" @click="userMenusToggleChange(item)" :class="{active: userMenusToggle== item.id}">
           <i class="iconfont" style="fontsize: 30px;" v-html="item.icon"></i>{{ item.name }}
           <span v-show="item.id == '1' && remainingDays.expireDays <= 3" id="remainingDays">剩余{{ remainingDays.expireDays }}天</span>
         </span>
-			</div>
+			</div> -->
 			<div class="app_nav_msg">
 				<el-dropdown trigger="hover" @command="logOut">
 					<div class="el-dropdown-link">
@@ -20,7 +20,6 @@
 						<span class="add_nav_msg_header" v-else></span>
 					</div>
 					<el-dropdown-menu slot="dropdown">
-						<el-dropdown-item style="text-align: center;font-size:12px;" v-if="userData.isAdmin == 1"  @click.native="navPersonal"><img src="../../images/company_icon.png" style="display:inline-block;width:14px;height:14px;margin-right:6px;vertical-align: text-bottom;">公司信息</el-dropdown-item>
 						<el-dropdown-item  style="text-align: center;font-size:12px;"  @click.native="navPersonal2"><img src="../../images/personal_icon.png" style="display:inline-block;width:12px;height:14px;vertical-align: text-bottom;margin-right:6px;">账号设置</el-dropdown-item>
 						<el-dropdown-item style="text-align: center;font-size:12px;" command="logOut"><img src="../../images/quit_icon.png" style="display:inline-block;width:12px;height:14px;margin-right:6px;vertical-align: text-bottom;">退出登录</el-dropdown-item>
 					</el-dropdown-menu>
@@ -39,27 +38,31 @@
           <p>你的账号中目前填充了一些示例数据供你体验功能使用。</p>
           <p>这些示例数据将在你<span class="color_f96868">创建第一个职位</span>或<span class="color_f96868">上传第一份简历</span>后清除</p>
         </div>
-				<router-view keep-alive></router-view>
+				<router-view></router-view>
 			</div>
 		</div>
 <!-- 菜单 -->
 		<div class="app_left" v-bind:class="{smallbarClass: !smallbarShow}" v-if="appNaveHide">
 			<div class="app_left_smallbar" @click="smallbar"><i class="iconfont">&#xe620;</i></div>
-
-    <div v-for="MainItem in leftMenuList" :key="MainItem.id">
+      <ul role="menubar" class="el-menu" v-show="smallbarShow">
+        <li role="menuitem" tabindex="-1" class="el-menu-item is-active" style="padding-left: 20px;">
+          <i class="iconfont"></i>
+          <span>工作台</span>
+        </li>
+      </ul>
+    <!-- <div v-for="MainItem in leftMenuList" :key="MainItem.id">
       <div v-if="userMenusToggle == MainItem.id">
         <el-menu   v-for="item in MainItem.children" :key="item.id" :router="true" :default-active="defaultActive" :unique-opened="true" v-bind:class="{smallbarClass: !smallbarShow}" @select="selectMenu" :default-openeds="defaultOpeneds" :collapse="!smallbarShow">
           <el-submenu v-if="item.children" :index="item.link">
             <template v-if="item.children" slot="title"><i class="iconfont" v-html="item.icon"></i><span>{{ item.name }}</span></template>
             <el-menu-item v-for="ite in item.children" :index="ite.link" :key="ite.id" v-if="ite.name != '客服管理'">{{ ite.name }}</el-menu-item>
-            <!-- <el-menu-item @click="openMpkf" index="/ATS/abc" v-else>{{ ite.name }}</el-menu-item> -->
             <p class="el-menu-item" style="padding-left: 40px;font-size:15px;" @click="openMpkf" v-else>客服管理</p>
           </el-submenu>
           <el-menu-item v-if="item.children == null&&item.name!='工资单'" :index="item.link"><i class="iconfont" v-html="item.icon"></i><span slot="title">{{ item.name }} </span></el-menu-item>
           <el-menu-item v-if="item.children == null&&item.name=='工资单'" :index="item.link" @click="routerPayStubs"><i class="iconfont" v-html="item.icon"></i><span slot="title">{{ item.name }} </span></el-menu-item>
         </el-menu>
       </div>
-    </div>
+    </div> -->
 		</div>
 		<el-dialog title="没有U盾提示" :visible.sync="ukeyPop" size="tiny" v-if="ukeyPopNum == 0" class="ukey_pop">
 			<p>如果您未插入爱聚U盾，请先插入U盾。</p>
@@ -294,12 +297,12 @@ export default {
     };
   },
   created () {
-    this.getLeftMenu();
+    // this.getLeftMenu();
   },
   mounted: function() {
-    this.userAjax();
+    // this.userAjax();
     this.oaLoginShow();
-    this.initDemoData();
+    // this.initDemoData();
     load();
     this.$nextTick(function() {
       // this.defaultActive = window.location.hash.substring(1);

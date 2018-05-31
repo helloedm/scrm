@@ -2,6 +2,10 @@
 /*公共初始化*/
 body, h1, h2, h3, h4, h5, h6, hr, p, blockquote, dl, dt, dd, ul, ol, li, pre, form, fieldset, legend, button, input, textarea, th, td{margin:0; padding:0;}
 h1, h2, h3, h4, h5, h6{font-size:100%;}
+body{
+    /* min-width: 1440px; */
+    overflow-x: hidden;
+}
 em{font-style:normal}
 li{list-style:none}
 img{border:0;}
@@ -14,11 +18,11 @@ a:hover{color:#0082d5;}
 html,body{background: #f5f8fa;}
 @font-face {
   font-family: 'iconfont';  /* project id 580073 */
-  src: url('//at.alicdn.com/t/font_580073_2to4fu1a8jl40a4i.eot');
-  src: url('//at.alicdn.com/t/font_580073_2to4fu1a8jl40a4i.eot?#iefix') format('embedded-opentype'),
-  url('//at.alicdn.com/t/font_580073_2to4fu1a8jl40a4i.woff') format('woff'),
-  url('//at.alicdn.com/t/font_580073_2to4fu1a8jl40a4i.ttf') format('truetype'),
-  url('//at.alicdn.com/t/font_580073_2to4fu1a8jl40a4i.svg#iconfont') format('svg');
+  src: url('//at.alicdn.com/t/font_580073_7moihyesodtv5cdi.eot');
+  src: url('//at.alicdn.com/t/font_580073_7moihyesodtv5cdi.eot?#iefix') format('embedded-opentype'),
+  url('//at.alicdn.com/t/font_580073_7moihyesodtv5cdi.woff') format('woff'),
+  url('//at.alicdn.com/t/font_580073_7moihyesodtv5cdi.ttf') format('truetype'),
+  url('//at.alicdn.com/t/font_580073_7moihyesodtv5cdi.svg#iconfont') format('svg');
 }
 .iconfont{
     font-family:"iconfont" !important;

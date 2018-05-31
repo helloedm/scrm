@@ -12,29 +12,32 @@
         </div>
         <div class="which_creat">请选择需要创建的店铺类型</div>
         <div class="shop_type">
-            <div><img src="../../images/ds.png" alt=""><div class="creat_now">立即创建</div></div>
-            <div><img src="../../images/dinner.png" alt=""><div class="creat_now">立即创建</div></div>
-            <div><img src="../../images/ls.png" alt=""><div class="creat_now">立即创建</div></div>
-            <div><img src="../../images/sq.png" alt=""><div class="creat_now">立即创建</div></div>
+            <div><img src="../../images/ds.png" alt=""><div class="creat_now" @click="creatshop(1)">立即创建</div></div>
+            <div><img src="../../images/dinner.png" alt=""><div class="creat_now" @click="creatshop(2)">立即创建</div></div>
+            <div><img src="../../images/ls.png" alt=""><div class="creat_now" @click="creatshop(3)">立即创建</div></div>
+            <div><img src="../../images/sq.png" alt=""><div class="creat_now" @click="creatshop(4)">立即创建</div></div>
         </div>
     </div>
 </template>
 <script>
+
 export default {
   name: "creatshop",
   data() {
     return {
-
+        
     };
   },
   created () {
     
   },
   mounted: function() {
-
+      
   },
   methods: {
-
+      creatshop(shopid){
+          this.$router.push({path:"creatshopinfo",query:{id:shopid}})
+      }
   },
   watch: {
     

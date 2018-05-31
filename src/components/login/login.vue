@@ -122,10 +122,40 @@ export default {
         return check;
     },
     login(){
-        if (this.checkphone(this.phone)) {
-            if (this.checkpassword(this.password)) {
-                this.$router.push({'path':'main'});
+        if (this.checkphone(this.phone)&&this.checkpassword(this.password)) {
+            var _this = this;
+            let method = 'account/login', //登录
+            params = {
+                account:_this.phone,
+                password:_this.password
+            },
+            callBack = (res)=>{
+                if(res.data.code == 0){
+                    var method="store/getStoreInfo", //是否有店铺 
+                    param=JSON.stringify({}),
+                    successd=function(res){
+                        if(res.data.data.hasStore == 1){
+                          switch (res.data.data.storeType) {
+                              case 1:
+                                  _this.$router.push({path:'/scrm/main',query:{type:0}});
+                                  break;
+                              case 2:
+                                  _this.$router.push({path:'/scrm/main',query:{type:1}});
+                                  break;
+                              case 3:
+                                  _this.$router.push({path:'/scrm/main',query:{type:2}});
+                                  break;
+                              case 4:
+                                  _this.$router.push({path:'/scrm/Trading_Area'});
+                              default:
+                                  break;
+                          }
+                        }
+                    };
+                    _this.$http(method,param,successd);
+                }
             }
+            this.$web_Http(method, params, callBack);
         }
     },
     register(){

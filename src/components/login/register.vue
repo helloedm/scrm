@@ -21,7 +21,7 @@
                 <div class="custom-form-item positionRelative">
                     <input type="text" placeholder="输入短信验证码" name="messCode" @blur="checkVerificationCode(VerificationCode)" v-model='VerificationCode' class="ng-pristine ng-untouched ng-valid ng-empty">
                     <span class="codeBox">
-                        <span class="getMessCode ng-binding" @click="getVerificationCode()">获取验证码</span>
+                        <span class="getMessCode ng-binding" @click="getVerificationCode()">{{getcode}}</span>
                     </span>
                     <span class="custom-tip">
                         <span class="ng-binding ng-hide" v-show="VerificationCode_is_warn">{{VerificationCode_warn}}</span>
@@ -58,6 +58,7 @@
     </div>
 </template>
 <script>
+import {clearInterval,setInterval} from 'timers'
 export default {
   name: "register",
   data() {
@@ -75,7 +76,9 @@ export default {
         phone_warn:'',
         VerificationCode_warn:'',
         password_warn:'',
-        checkagain_warn:''
+        checkagain_warn:'',
+
+        getcode:"获取验证码"
     };
   },
   created () {
@@ -139,12 +142,42 @@ export default {
         return check;
     },
     getVerificationCode(){
-        this.checkphone(this.phone);
+        var _this = this;
+        if (_this.checkphone(this.phone) && _this.getcode == "获取验证码") {
+            let method = 'account/getVerifyCode',
+            params = {
+                phone:_this.phone,
+            },
+            callBack = (res)=>{
+                if (res.data.code == 0) {
+                    var count = 60;
+                    _this.timers = setInterval(() => {
+                        count--;
+                        if (count == 0) {
+                            clearInterval(_this.timers);
+                            _this.getcode = "获取验证码";
+                        } else {
+                            _this.getcode = count+"s后重发";
+                        }
+                    }, 1000);
+                }
+            }
+            this.$web_Http(method, params, callBack);            
+        }
     },
     register(){
         if(this.checkphone(this.phone)&&this.checkVerificationCode(this.VerificationCode)&&this.checkpassword(this.password)&&this.checkpassword_again(this.checkagain)){
-        //    alert("注册成功")
-            this.$router.push({"path":'creatshop'})
+            var _this = this;
+            let method = 'account/registerByPhone',
+            params = {
+                phone:_this.phone,
+                code:_this.VerificationCode,
+                password:_this.password
+            },
+            callBack = (res)=>{
+                this.$router.push({"path":'login'})
+            }
+            this.$web_Http(method, params, callBack);
         }
     }
   },
