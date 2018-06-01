@@ -347,8 +347,8 @@
           <div style="display:flex;">
             <img alt="" src="../../images/control/tx.png"> 
             <div style="margin: 19px 0px 0px 16px;">
-              <div class="user_name" style="font-size: 14px; color: rgb(31, 45, 61); font-weight: bold;">维尼熊</div> 
-              <div class="user_company" style="font-size: 12px; color: rgb(152, 169, 191); margin-top: 8px;">维尼小熊公司</div>
+              <div class="user_name" style="font-size: 14px; color: rgb(31, 45, 61); font-weight: bold;">{{userphone}}</div> 
+              <div class="user_company" style="font-size: 12px; color: rgb(152, 169, 191); margin-top: 8px;">{{username}}</div>
             </div>            
           </div>
           <div class="Edition">专业版</div>
@@ -449,30 +449,40 @@
       type:this.$route.query.type,
       Restaurant:false,
       store:false,
-      retail:false
+      retail:false,
+      userphone:'',
+      username:''
     };
   },
   created () {
     this.which_load(this.type);
   },
   mounted: function() {
+    this.getStoreInfo();
     this.getDateList();
   },
   methods: {
-    Takeoutfood_status(value){
-      
-    },
-    dinner(){
-      // alert(this.typeMsg);
+    getStoreInfo(){
+      var _this = this;
+      var method="store/getStoreInfo", //店铺信息查询
+      param=JSON.stringify({
+        id:_this.$route.query.shopid
+      }),
+      successd=function(res){
+        console.log(res);
+        _this.userphone = res.data.data.phone;
+        _this.username = res.data.data.name;
+      };
+      _this.$http(method,param,successd);
     },
     which_load(type){
       switch (type) {
-        case '0'://门店
+        case '1'://电商
           this.store = true; 
           this.retail = false;
           this.Restaurant = false;
           break;
-        case '1'://餐饮
+        case '3'://餐饮
           this.Restaurant = true;
           this.store = false;
           this.retail = false;
@@ -561,9 +571,10 @@
   },
   watch: {
     $route(to, form) {
-      var type = this.$route.query.type;// 路由参数发生变化之后 没有监听url附带参数的变化 需要重新赋值
+      var type = String(this.$route.query.type);// 路由参数发生变化之后 没有监听url附带参数的变化 需要重新赋值
       if (to.fullPath != form.fullPath) {
         this.which_load(type);
+        this.getStoreInfo();
       }
     }
   },

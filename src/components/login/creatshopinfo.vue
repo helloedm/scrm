@@ -6,8 +6,8 @@
                 <span style="margin-left: 8px; padding-top: 5px;">微招聘，用爱聚</span>
             </div>
             <div class="user_info">
-                <span class="user_name" style="font-size:16px;color:#1F2D3D;"></span>
-                <span style="color:#5CB3FF;margin-left:20px;font-size:14px;">退出</span>
+                <span class="user_name" style="font-size:16px;color:#1F2D3D;">{{user_name}}</span>
+                <span style="color:#5CB3FF;margin-left:20px;font-size:14px;cursor:pointer;" @click="logout">退出</span>
             </div>
         </div>
         <div data-v-93c1352a="" class="which_creat">创建店铺信息</div>
@@ -18,9 +18,7 @@
                 prefix-icon="iconfont icon-dianpu"
             ></el-input>
             <div style="width:368px;position: relative;" class="choseshop">
-                <span style="position: absolute;z-index: 9;top: 23px;left:5px;">
-                    <i class="iconfont">&#xe733;</i>
-                </span>
+                <img src="../../images/control/c2.png" alt="" style="position: absolute;z-index: 9;top: 23px;left:5px;width:15px;">
                 <el-cascader
                     style="width:240px;margin-left:-100px;"
                     expand-trigger="hover"
@@ -32,9 +30,7 @@
                 </el-cascader>                
             </div>
             <div style="width:368px;position: relative;">
-                <span style="position: absolute;z-index: 9;top: 23px;left:5px;">
-                    <i class="iconfont">&#xe733;</i>
-                </span>
+                <img src="../../images/control/c3.png" alt="" style="position: absolute;z-index: 9;top: 26px;left:5px;width:15px;">
                 <el-select v-model="domain" placeholder="选择行业" class="domain_choose">
                     <el-option v-for="item in domainList" :label="item.name" :value="item.name"  :key="item.id"></el-option>
                 </el-select>
@@ -50,6 +46,7 @@ export default {
   name: "creatshopinfo",
   data() {
     return {
+        user_name:'',
         shop_name:'',
         address:[],
         domain:'',
@@ -63,8 +60,24 @@ export default {
   },
   mounted: function() {
       this.transitionCityLists();
+      this.getuserinfo();
   },
   methods: {
+      logout(){
+          sessionStorage.removeItem("token");
+          this.$router.push({path:"/login"})
+      },
+      getuserinfo(){
+          var _this = this;
+          var methods = "store/getUserInfo",
+          param = JSON.stringify({}),
+          successd = function(res){
+              console.log(res);
+              _this.user_name = res.data.data.phone;
+          };
+          _this.$http(methods,param,successd);
+
+      },
       check(){
           var check = false;
           var warning = '';
@@ -97,17 +110,17 @@ export default {
             }),
             successd=function(res){
                 if (res.data.code == 0) {
-                    switch (_this.shopid) {
-                        case '1':
-                            _this.$router.push({path:'/scrm/main',query:{type:'0',shopid:res.data.data.id}});
-                            break;
-                        case '2':
+                    switch (res.data.data.storeType) {
+                        case 1:
                             _this.$router.push({path:'/scrm/main',query:{type:'1',shopid:res.data.data.id}});
                             break;
-                        case '3':
+                        case 2:
                             _this.$router.push({path:'/scrm/main',query:{type:'2',shopid:res.data.data.id}});
                             break;
-                        case '4':
+                        case 3:
+                            _this.$router.push({path:'/scrm/main',query:{type:'3',shopid:res.data.data.id}});
+                            break;
+                        case 4:
                             _this.$router.push({path:'/scrm/Trading_Area',query:{shopid:res.data.data.id}});
                         default:
                             break;

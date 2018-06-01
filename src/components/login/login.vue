@@ -133,24 +133,22 @@ export default {
                 sessionStorage.setItem("token",res.data.data.token)
                 if(res.data.code == 0){
                     var method="store/getUserInfo", //是否有店铺 
-                    param=JSON.stringify({
-
-                    }),
+                    param=JSON.stringify({}),
                     successd=function(res){
                         sessionStorage.setItem("shopid",res.data.data.id);
                         if(res.data.data.hasStore == 1){
                           switch (res.data.data.storeType) {
                               case 1:
-                                  _this.$router.push({path:'/scrm/main',query:{type:'0'}});
+                                  _this.$router.push({path:'/scrm/main',query:{type:'1',shopid:res.data.data.id}});//电商
                                   break;
                               case 2:
-                                  _this.$router.push({path:'/scrm/main',query:{type:'1'}});
+                                  _this.$router.push({path:'/scrm/main',query:{type:'2',shopid:res.data.data.id}});//零售
                                   break;
                               case 3:
-                                  _this.$router.push({path:'/scrm/main',query:{type:'2'}});
+                                  _this.$router.push({path:'/scrm/main',query:{type:'3',shopid:res.data.data.id}});//餐饮
                                   break;
                               case 4:
-                                  _this.$router.push({path:'/scrm/Trading_Area'});
+                                  _this.$router.push({path:'/scrm/Trading_Area',query:{shopid:res.data.data.id}});//商圈
                               default:
                                   break;
                           }

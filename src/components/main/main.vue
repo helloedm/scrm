@@ -18,10 +18,7 @@
               <div style="color:#606266;font-size:14px;text-align:center;margin:8px 0;cursor:pointer;">创建店铺</div>
             </router-link>
             <!-- <div style="color:#606266;font-size:14px;text-align:center;margin:8px 0;cursor:pointer;">切换店铺</div> -->
-						<el-dropdown-item style="text-align: center;font-size:12px;" @click.native="change_store('0')">小熊门店</el-dropdown-item>
-            <el-dropdown-item style="text-align: center;font-size:12px;" @click.native="change_store('1')">小熊餐厅</el-dropdown-item>
-            <el-dropdown-item style="text-align: center;font-size:12px;" @click.native="change_store('2')">小熊零售</el-dropdown-item>
-            <el-dropdown-item style="text-align: center;font-size:12px;" @click.native="change_store('3')">小熊商圈</el-dropdown-item>
+						<el-dropdown-item style="text-align: center;font-size:12px;" @click.native="change_store(item.storeType,item.id)" v-for="(item,index) in shoplist" :key="index">{{item.name}}</el-dropdown-item>
 					</el-dropdown-menu>
 				</el-dropdown>
 			</div>
@@ -288,6 +285,7 @@ export default {
       }, //试用剩余天数
       appNaveHide: true,
       demoDataCon:2,//1:初始化成功 2:示例数据已被删除.
+      shoplist:[]
     };
   },
   created () {
@@ -312,11 +310,11 @@ export default {
     this.getStoreList();
   },
   methods: {
-    change_store(id){
-      if (id == 3) {
-        this.$router.push({path:"Trading_Area"})
+    change_store(id,shopid){
+      if (id == 4) {
+        this.$router.push({path:"Trading_Area",query:{shopid:shopid}})
       }else{
-        this.$router.push({path:"/scrm/main",query:{"type":id}})
+        this.$router.push({path:"/scrm/main",query:{type:id,shopid:shopid}})
       }
     },
     getStoreList(){
@@ -324,7 +322,7 @@ export default {
       var method = "store/getStoreList",
       param=JSON.stringify({id:_this.$route.query.shopid}),
       succeed = (res)=> {
-        
+        _this.shoplist = res.data.data;
       };
       this.$http(method, param, succeed);
     },

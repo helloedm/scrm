@@ -323,7 +323,6 @@
         width: 136px;
         height: 34px;
         font-size: 12px;
-        font-family: PingFangSC-Regular;
         color: rgba(152,169,191,1);
         line-height: 17px;
         text-align: justify;
@@ -334,7 +333,6 @@
     }
     .manager .des div:first-child{
         font-size:14px;
-        font-family:PingFangSC-Regular;
         color:rgba(70,86,105,1);
         line-height:20px;
         margin-bottom:10px;
