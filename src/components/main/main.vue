@@ -5,23 +5,23 @@
         <img src="../../images/logo_04.png" alt="">
         <span style="margin-left:8px;padding-top:5px;color:#fff;">微招聘，用爱聚</span>
       </div>
-      <!-- <div class="app_nav_access">
-        <span v-for="(item,index) in leftMenuList" v-if="index<3" :key="item.id" @click="userMenusToggleChange(item)" :class="{active: userMenusToggle== item.id}">
-          <i class="iconfont" style="fontsize: 30px;" v-html="item.icon"></i>{{ item.name }}
-          <span v-show="item.id == '1' && remainingDays.expireDays <= 3" id="remainingDays">剩余{{ remainingDays.expireDays }}天</span>
-        </span>
-			</div> -->
 			<div class="app_nav_msg">
 				<el-dropdown trigger="hover" @command="logOut">
 					<div class="el-dropdown-link">
-						<span class="add_nav_msg_header" v-if="userData&&userData.fileInfo == null">{{userData.name != null?userData.name.slice(-2):""}}</span>
-						<span class="add_nav_msg_header" v-if="userData&&userData.fileInfo != null"><img :src="userData.fileInfo.url"></span>
+						<!-- <span class="add_nav_msg_header" v-if="userData&&userData.fileInfo == null">{{userData.name != null?userData.name.slice(-2):""}}</span> -->
+						<span class="add_nav_msg_header"><img src="../../images/control/tx.png"></span>
 						<span class="add_nav_msg_name" v-if="userData">{{userData.name}}</span>
 						<span class="add_nav_msg_header" v-else></span>
 					</div>
 					<el-dropdown-menu slot="dropdown">
-						<el-dropdown-item  style="text-align: center;font-size:12px;"  @click.native="navPersonal2"><img src="../../images/personal_icon.png" style="display:inline-block;width:12px;height:14px;vertical-align: text-bottom;margin-right:6px;">账号设置</el-dropdown-item>
-						<el-dropdown-item style="text-align: center;font-size:12px;" command="logOut"><img src="../../images/quit_icon.png" style="display:inline-block;width:12px;height:14px;margin-right:6px;vertical-align: text-bottom;">退出登录</el-dropdown-item>
+            <router-link to="/creatshop">
+              <div style="color:#606266;font-size:14px;text-align:center;margin:8px 0;cursor:pointer;">创建店铺</div>
+            </router-link>
+            <!-- <div style="color:#606266;font-size:14px;text-align:center;margin:8px 0;cursor:pointer;">切换店铺</div> -->
+						<el-dropdown-item style="text-align: center;font-size:12px;" @click.native="change_store('0')">小熊门店</el-dropdown-item>
+            <el-dropdown-item style="text-align: center;font-size:12px;" @click.native="change_store('1')">小熊餐厅</el-dropdown-item>
+            <el-dropdown-item style="text-align: center;font-size:12px;" @click.native="change_store('2')">小熊零售</el-dropdown-item>
+            <el-dropdown-item style="text-align: center;font-size:12px;" @click.native="change_store('3')">小熊商圈</el-dropdown-item>
 					</el-dropdown-menu>
 				</el-dropdown>
 			</div>
@@ -34,11 +34,13 @@
 		<div class="app_right" v-bind:class="{smallbarClass: !smallbarShow,'app_right_p':!appNaveHide}">
 			<div class="app_right_box">
         <!-- 提示 -->
-        <div class="index_tip" v-if="demoDataCon==1&&(userMenusToggle == 1||$route.name!='personal')">
+        <!-- <div class="index_tip" v-if="demoDataCon==1&&(userMenusToggle == 1||$route.name!='personal')">
           <p>你的账号中目前填充了一些示例数据供你体验功能使用。</p>
           <p>这些示例数据将在你<span class="color_f96868">创建第一个职位</span>或<span class="color_f96868">上传第一份简历</span>后清除</p>
-        </div>
-				<router-view></router-view>
+        </div> -->
+        <keep-alive>
+          <router-view :type-msg="type"></router-view>
+        </keep-alive>
 			</div>
 		</div>
 <!-- 菜单 -->
@@ -50,19 +52,6 @@
           <span>工作台</span>
         </li>
       </ul>
-    <!-- <div v-for="MainItem in leftMenuList" :key="MainItem.id">
-      <div v-if="userMenusToggle == MainItem.id">
-        <el-menu   v-for="item in MainItem.children" :key="item.id" :router="true" :default-active="defaultActive" :unique-opened="true" v-bind:class="{smallbarClass: !smallbarShow}" @select="selectMenu" :default-openeds="defaultOpeneds" :collapse="!smallbarShow">
-          <el-submenu v-if="item.children" :index="item.link">
-            <template v-if="item.children" slot="title"><i class="iconfont" v-html="item.icon"></i><span>{{ item.name }}</span></template>
-            <el-menu-item v-for="ite in item.children" :index="ite.link" :key="ite.id" v-if="ite.name != '客服管理'">{{ ite.name }}</el-menu-item>
-            <p class="el-menu-item" style="padding-left: 40px;font-size:15px;" @click="openMpkf" v-else>客服管理</p>
-          </el-submenu>
-          <el-menu-item v-if="item.children == null&&item.name!='工资单'" :index="item.link"><i class="iconfont" v-html="item.icon"></i><span slot="title">{{ item.name }} </span></el-menu-item>
-          <el-menu-item v-if="item.children == null&&item.name=='工资单'" :index="item.link" @click="routerPayStubs"><i class="iconfont" v-html="item.icon"></i><span slot="title">{{ item.name }} </span></el-menu-item>
-        </el-menu>
-      </div>
-    </div> -->
 		</div>
 		<el-dialog title="没有U盾提示" :visible.sync="ukeyPop" size="tiny" v-if="ukeyPopNum == 0" class="ukey_pop">
 			<p>如果您未插入爱聚U盾，请先插入U盾。</p>
@@ -188,11 +177,16 @@ import Style from "../../style/main.css"; // 公共样式文件
 import Util from "../../script/util.js"; //公共方法
 import Axios from "axios";
 import { load, login_onclick } from "../../script/ukey.js"; //公共方法
+import typeMsg from './recruitment'
 
 export default {
   name: "main",
+  components: {
+    typeMsg
+  },
   data() {
     return {
+      type:this.$route.query.type,
       leftMenuList: [],
       Util: Util,
       userData: {
@@ -304,6 +298,7 @@ export default {
     this.oaLoginShow();
     // this.initDemoData();
     load();
+    // this.getStoreList();//获取店铺列表
     this.$nextTick(function() {
       // this.defaultActive = window.location.hash.substring(1);
       if (window.location.hash.substring(2, 8) == "manage") {
@@ -314,8 +309,25 @@ export default {
         this.userMenusToggle = 2;
       }
     });
+    this.getStoreList();
   },
   methods: {
+    change_store(id){
+      if (id == 3) {
+        this.$router.push({path:"Trading_Area"})
+      }else{
+        this.$router.push({path:"/scrm/main",query:{"type":id}})
+      }
+    },
+    getStoreList(){
+      var _this = this;
+      var method = "store/getStoreList",
+      param=JSON.stringify({id:_this.$route.query.shopid}),
+      succeed = (res)=> {
+        
+      };
+      this.$http(method, param, succeed);
+    },
     userMenusToggleChange(item){
       if(item.id == 1){
         this.userMenusToggle = item.id;
@@ -337,7 +349,7 @@ export default {
             // console.log(res)
             this.leftMenuList = res.data.data;
         };
-        this.$webHttp(method, param, succeed, null);
+        this.$webh(method, param, succeed, null);
     },
     selectMenu: function(index, indexpath) {
       console.log(index, indexpath);
@@ -376,7 +388,7 @@ export default {
           }
           astart_setLog(res.data.data.companyId, res.data.data.id); //scrm统计埋点
         };
-      this.$http(method, param, succeed);
+      this.$h(method, param, succeed);
     },
     remainingDaysGet: function() {
       var self = this;
@@ -809,18 +821,14 @@ export default {
     },   
   },
   watch: {
-    $route(to, form) {
-      this.defaultActive = to.path;
-      if(to.name=='personal'){
-        this.appNaveHide = false;
-      }else{
-        this.appNaveHide = true;
-      }
-    }
-  },
-  //  components: {
-  //     LeftMenu
-  // }
+    // $route(to, form) {
+    //   console.log(to);
+    //   console.log(form);
+    //   if (to.fullPath != form.fullPath) {
+    //     // window.location.reload();
+    //   }
+    // }
+  }
 };
 </script>
 

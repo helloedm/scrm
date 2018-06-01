@@ -2,7 +2,7 @@
   <div id="recruitment">
     <div class="recruitment_left">
     
-    <section class="store" v-show="store">
+    <section class="store" v-if="store">
       <div class="Order">
         <div class="Order_info">
           <span class="Order_info_num">120</span>
@@ -27,7 +27,7 @@
       </div>      
     </section>
 
-    <section class="Restaurant" v-show="Restaurant">
+    <section class="Restaurant" v-if="Restaurant">
       <div class="Order">
         <div class="Order_info">
           <span class="Order_info_num">120</span>
@@ -100,7 +100,7 @@
       </div> 
     </section>
 
-    <section class="retail" v-show="retail">
+    <section class="retail" v-if="retail">
       <div class="Member_zone">
         <div style="font-size:14px;color:rgba(31,45,61,1);line-height:20px;font-weight:bold;margin:16px 0 0 24px;">会员</div>
         <div class="member_num">
@@ -365,14 +365,14 @@
         </div>
       </div>
 
-      <section class="store" v-show="store || retail">
+      <section class="store" v-if="store || retail">
         <div class="add_shop">
           <img src="../../images/control/shop.png" alt="">
           <div class="add"><i class="iconfont">&#xe767;</i>添加门店</div>
         </div>        
       </section>
         
-      <section class="Restaurant" v-show="Restaurant">
+      <section class="Restaurant" v-if="Restaurant">
         <div class="Printer">
           <div>
             <img src="../../images/control/Printer.png" alt="">
@@ -429,6 +429,7 @@
 <script>
   export default {
   name: "recruitment",
+  props:['typeMsg'],
   data() {
     var nowYear=new Date().getFullYear();
     var nowMonth=(new Date().getMonth()+1)<10?'0'+(new Date().getMonth()+1):(new Date().getMonth()+1);
@@ -452,29 +453,34 @@
     };
   },
   created () {
-    this.which_load();
+    this.which_load(this.type);
   },
   mounted: function() {
-    // this.getDateList();
-    
+    this.getDateList();
   },
   methods: {
     Takeoutfood_status(value){
-
+      
     },
     dinner(){
-
+      // alert(this.typeMsg);
     },
-    which_load(){
-      switch (this.type) {
+    which_load(type){
+      switch (type) {
         case '0'://门店
           this.store = true; 
+          this.retail = false;
+          this.Restaurant = false;
           break;
         case '1'://餐饮
           this.Restaurant = true;
+          this.store = false;
+          this.retail = false;
           break;
         case '2'://零售
           this.retail = true;
+          this.store = false;
+          this.Restaurant = false;
           break;
         default:
           break;
@@ -554,7 +560,12 @@
     }
   },
   watch: {
-    
+    $route(to, form) {
+      var type = this.$route.query.type;// 路由参数发生变化之后 没有监听url附带参数的变化 需要重新赋值
+      if (to.fullPath != form.fullPath) {
+        this.which_load(type);
+      }
+    }
   },
 };
 </script>

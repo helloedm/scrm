@@ -130,26 +130,32 @@ export default {
                 password:_this.password
             },
             callBack = (res)=>{
+                sessionStorage.setItem("token",res.data.data.token)
                 if(res.data.code == 0){
-                    var method="store/getStoreInfo", //是否有店铺 
-                    param=JSON.stringify({}),
+                    var method="store/getUserInfo", //是否有店铺 
+                    param=JSON.stringify({
+
+                    }),
                     successd=function(res){
+                        sessionStorage.setItem("shopid",res.data.data.id);
                         if(res.data.data.hasStore == 1){
                           switch (res.data.data.storeType) {
                               case 1:
-                                  _this.$router.push({path:'/scrm/main',query:{type:0}});
+                                  _this.$router.push({path:'/scrm/main',query:{type:'0'}});
                                   break;
                               case 2:
-                                  _this.$router.push({path:'/scrm/main',query:{type:1}});
+                                  _this.$router.push({path:'/scrm/main',query:{type:'1'}});
                                   break;
                               case 3:
-                                  _this.$router.push({path:'/scrm/main',query:{type:2}});
+                                  _this.$router.push({path:'/scrm/main',query:{type:'2'}});
                                   break;
                               case 4:
                                   _this.$router.push({path:'/scrm/Trading_Area'});
                               default:
                                   break;
                           }
+                        }else{
+                            _this.$router.push({path:'creatshop'});
                         }
                     };
                     _this.$http(method,param,successd);

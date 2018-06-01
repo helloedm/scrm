@@ -6,7 +6,7 @@
                 <span style="margin-left: 8px; padding-top: 5px;">微招聘，用爱聚</span>
             </div>
             <div class="user_info">
-                <span class="user_name" style="font-size:16px;color:#1F2D3D;">15833329884</span>
+                <span class="user_name" style="font-size:16px;color:#1F2D3D;"></span>
                 <span style="color:#5CB3FF;margin-left:20px;font-size:14px;">退出</span>
             </div>
         </div>
@@ -96,20 +96,19 @@ export default {
                 storeType:_this.shopid
             }),
             successd=function(res){
-                console.log(res);
                 if (res.data.code == 0) {
                     switch (_this.shopid) {
-                        case 1:
-                            _this.$router.push({path:'/scrm/main',query:{type:0}});
+                        case '1':
+                            _this.$router.push({path:'/scrm/main',query:{type:'0',shopid:res.data.data.id}});
                             break;
-                        case 2:
-                            _this.$router.push({path:'/scrm/main',query:{type:1}});
+                        case '2':
+                            _this.$router.push({path:'/scrm/main',query:{type:'1',shopid:res.data.data.id}});
                             break;
-                        case 3:
-                            _this.$router.push({path:'/scrm/main',query:{type:2}});
+                        case '3':
+                            _this.$router.push({path:'/scrm/main',query:{type:'2',shopid:res.data.data.id}});
                             break;
-                        case 4:
-                            _this.$router.push({path:'/scrm/Trading_Area'});
+                        case '4':
+                            _this.$router.push({path:'/scrm/Trading_Area',query:{shopid:res.data.data.id}});
                         default:
                             break;
                     }

@@ -18,6 +18,7 @@ import 'vue-croppa/dist/vue-croppa.css'
 import Croppa from 'vue-croppa'
 
 import Methods from 'script/methods'
+import lanjieqi from 'script/lanjieqi'
 Vue.use(Methods);
 Vue.use(Croppa);
 

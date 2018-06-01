@@ -6,16 +6,16 @@
                 <span style="margin-left: 8px; padding-top: 5px;">微招聘，用爱聚</span>
             </div>
             <div class="user_info">
-                <span class="user_name" style="font-size:16px;color:#1F2D3D;">15833329884</span>
-                <span style="color:#5CB3FF;margin-left:20px;font-size:14px;">退出</span>
+                <span class="user_name" style="font-size:16px;color:#1F2D3D;cursor: pointer;">{{user_name}}</span>
+                <!-- <span style="color:#5CB3FF;margin-left:20px;font-size:14px;">退出</span> -->
             </div>
         </div>
         <div class="which_creat">请选择需要创建的店铺类型</div>
         <div class="shop_type">
-            <div><img src="../../images/ds.png" alt=""><div class="creat_now" @click="creatshop(1)">立即创建</div></div>
-            <div><img src="../../images/dinner.png" alt=""><div class="creat_now" @click="creatshop(2)">立即创建</div></div>
-            <div><img src="../../images/ls.png" alt=""><div class="creat_now" @click="creatshop(3)">立即创建</div></div>
-            <div><img src="../../images/sq.png" alt=""><div class="creat_now" @click="creatshop(4)">立即创建</div></div>
+            <div><img src="../../images/ds.png" alt=""><div class="creat_now" @click="creatshop('1')">立即创建</div></div>
+            <div><img src="../../images/dinner.png" alt=""><div class="creat_now" @click="creatshop('2')">立即创建</div></div>
+            <div><img src="../../images/ls.png" alt=""><div class="creat_now" @click="creatshop('3')">立即创建</div></div>
+            <div><img src="../../images/sq.png" alt=""><div class="creat_now" @click="creatshop('4')">立即创建</div></div>
         </div>
     </div>
 </template>
@@ -25,16 +25,27 @@ export default {
   name: "creatshop",
   data() {
     return {
-        
+        user_name:""
     };
   },
   created () {
-    
+    this.getuserinfo();
   },
   mounted: function() {
       
   },
   methods: {
+      getuserinfo(){
+          var _this = this;
+          var methods = "store/getUserInfo",
+          param = JSON.stringify({}),
+          successd = function(res){
+              console.log(res);
+              _this.user_name = res.data.data.phone;
+          };
+          _this.$http(methods,param,successd);
+
+      },
       creatshop(shopid){
           this.$router.push({path:"creatshopinfo",query:{id:shopid}})
       }

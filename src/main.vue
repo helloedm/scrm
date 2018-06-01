@@ -1,33 +1,10 @@
 <template>
 	<div id="app" class="clearfix" :class="{'oa_ecbao_cn' : oa_login}" v-loading.fullscreen.lock="fullscreenLoading">
-		<!-- <div id="wxMask" v-if="ewm.wxMask">
-       <div id="ewmWrap">
-         <img src="static/img/ewmTitle.png" alt="title">
-         <img id="ewm" :src="ewm.src" alt="二维码">
-         <p>绑定微信后，我们为你提供更多服务</p>
-       </div>
-    </div> -->
-    <!-- hrmRoleId:{
-      1:管理员,
-      2:员工,
-      3:财务,
-      4:招聘专员,
-      5:面试官,
-      6:苏宁云商城体验用户,
-      7:人事
-    } -->
     <div class="app_nav">
 			<div class="app_nav_logo">
         <img src="./images/logo_04.png" alt="">
         <span style="margin-left:8px;padding-top:5px;">微招聘，用爱聚</span>
       </div>
-			<!-- <div class="app_nav_access">
-        <span @click="userMenusToggle = 2;$router.push('/ATS/recruitment');remainingDaysGet();appNaveHide=true" :class="{active: userMenusToggle==2}" v-if="Util.ukeyNo||(userData&&(userData.userNature==1||userData.hrmRoleId==1||userData.hrmRoleId==4)&&userData.hrmRoleId!=6&&userData.hrmRoleId!=5&&userData.hrmRoleId!=7)"><i class="iconfont" style="fontsize: 30px;">&#xe677;</i>招聘管理
-          <span v-show="remainingDays.expireDays <= 3" id="remainingDays">剩余{{ remainingDays.expireDays }}天</span>
-        </span>
-				<span @click="userMenusToggle = 0; $router.push('/index');appNaveHide=true" v-bind:class="{active: userMenusToggle ==0}"><i class="iconfont" style="fontsize: 30px;">&#xe684;</i>协同办公</span>
-				<span @click="ukeyPopShow" v-bind:class="{active: userMenusToggle==1}" v-if="Util.ukeyNo||(userData.userNature==1||userData.hrmRoleId==3||userData.hrmRoleId==6||userData.hrmRoleId==7)"><i class="iconfont" style="fontsize: 30px;">&#xe79c;</i>公司管理</span>
-			</div> -->
       <div class="app_nav_access">
         <span v-for="(item,index) in leftMenuList" v-if="index<3" :key="item.id" @click="userMenusToggleChange(item)" :class="{active: userMenusToggle== item.id}">
           <i class="iconfont" style="fontsize: 30px;" v-html="item.icon"></i>{{ item.name }}
@@ -46,7 +23,6 @@
 						<el-dropdown-item style="text-align: center;font-size:12px;" v-if="userData.isAdmin == 1"  @click.native="navPersonal"><img src="./images/company_icon.png" style="display:inline-block;width:14px;height:14px;margin-right:6px;vertical-align: text-bottom;">公司信息</el-dropdown-item>
 						<el-dropdown-item  style="text-align: center;font-size:12px;"  @click.native="navPersonal2"><img src="./images/personal_icon.png" style="display:inline-block;width:12px;height:14px;vertical-align: text-bottom;margin-right:6px;">账号设置</el-dropdown-item>
 
-              	<!--<router-link to="/personal">个人中心</router-link>-->
 						<el-dropdown-item style="text-align: center;font-size:12px;" command="logOut"><img src="./images/quit_icon.png" style="display:inline-block;width:12px;height:14px;margin-right:6px;vertical-align: text-bottom;">退出登录</el-dropdown-item>
 					</el-dropdown-menu>
 				</el-dropdown>
@@ -338,6 +314,16 @@ export default {
     });
   },
   methods: {
+    getStoreList(){
+        var method = "store/getStoreList",
+        param=JSON.stringify({
+          
+        }),
+        succeed = (res)=> {
+            console.log(res)
+        };
+        this.$http(method, param, succeed);
+    },
     userMenusToggleChange(item){
       if(item.id == 1){
         this.userMenusToggle = item.id;
