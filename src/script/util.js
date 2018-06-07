@@ -6,8 +6,8 @@
 
 // var user = "http://192.168.5.76:8080/hrm"; // 小辉本地
 
-var user = "http://192.168.4.91:8081/scrmCenter" //丸子本地
-// var user = "http://121.199.182.2:30004/scrmCenter"; // 丸子正式
+// var user = "http://192.168.4.91:8081/scrmCenter" //丸子本地
+var user = "http://121.199.182.2:30004/scrmCenter"; // 丸子正式
 
 // var user = "http://192.168.4.60:8080/hrm"; // 天明本地
 // var user = "http://192.168.4.87:8080/hrm"; // 江流本地

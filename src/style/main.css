@@ -276,7 +276,7 @@ right{display: block;float: right;}
 .app_nav {
     height: 56px;
     line-height: 56px;
-    background-color: #5CB3FF;
+    background-color: #fff;
     overflow: hidden;
     position: fixed;
     left: 0;
@@ -327,16 +327,16 @@ right{display: block;float: right;}
     height: 50px;
 }
 .app_left {
-    width: 208px;
+    width: 90px;
     position: fixed;
     left: 0;
     top: 0;
     bottom: 0;
-    padding-top: 50px;
     transition: 0.2s;
-    background-color: #fff;
+    background-color: #273543;
+    color: #d0d0d0;
     overflow-y: auto;
-    z-index: 98;
+    z-index: 100;
 }
 .app_left.smallbarClass{
     width: 64px;
@@ -358,15 +358,12 @@ right{display: block;float: right;}
     background: #222d32;
 }
 .app_right {
-    padding: 80px 24px 0px 232px;
-    transition: 0.2s;
+    padding: 80px 24px 0px 120px;
+    transition: 0.1s;
     z-index: 97;
 }
 .app_right.smallbarClass {
-    padding: 70px 20px 0px 78px;
-}
-.app_left i.iconfont {
-    margin-right: 10px;
+    padding: 70px 20px 0px 220px;
 }
 .add_nav_msg_header {
     height: 24px;

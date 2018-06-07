@@ -3,7 +3,7 @@
     <div class="app_nav">
 			<div class="app_nav_logo">
         <img src="../../images/logo_04.png" alt="">
-        <span style="margin-left:8px;padding-top:5px;color:#fff;">微招聘，用爱聚</span>
+        <!-- <span style="margin-left:8px;padding-top:5px;color:#fff;">微招聘，用爱聚</span> -->
       </div>
 			<div class="app_nav_msg">
 				<el-dropdown trigger="hover" @command="logOut">
@@ -30,25 +30,27 @@
 <!-- 内容 -->
 		<div class="app_right" v-bind:class="{smallbarClass: !smallbarShow,'app_right_p':!appNaveHide}">
 			<div class="app_right_box">
-        <!-- 提示 -->
-        <!-- <div class="index_tip" v-if="demoDataCon==1&&(userMenusToggle == 1||$route.name!='personal')">
-          <p>你的账号中目前填充了一些示例数据供你体验功能使用。</p>
-          <p>这些示例数据将在你<span class="color_f96868">创建第一个职位</span>或<span class="color_f96868">上传第一份简历</span>后清除</p>
-        </div> -->
         <keep-alive>
           <router-view :type-msg="type"></router-view>
         </keep-alive>
 			</div>
 		</div>
 <!-- 菜单 -->
-		<div class="app_left" v-bind:class="{smallbarClass: !smallbarShow}" v-if="appNaveHide">
-			<div class="app_left_smallbar" @click="smallbar"><i class="iconfont">&#xe620;</i></div>
-      <ul role="menubar" class="el-menu" v-show="smallbarShow">
-        <li role="menuitem" tabindex="-1" class="el-menu-item is-active" style="padding-left: 20px;">
-          <i class="iconfont"></i>
+		<div class="app_left" v-if="appNaveHide">
+      <div class="logo"></div>
+      <div class="menu_list">
+        <div :class="{active:1}">
+          <i class="iconfont" style="font-size:14px;"></i>
           <span>工作台</span>
-        </li>
-      </ul>
+        </div>
+        <div @click="changewidth">
+          <i class="iconfont" style="font-size:14px;"></i>
+          <span>二级菜单</span>
+        </div>
+      </div>
+      <div class="Two_level_menu" :class="{active:Two_level_menu_isshow}">
+
+      </div>
 		</div>
 		<el-dialog title="没有U盾提示" :visible.sync="ukeyPop" size="tiny" v-if="ukeyPopNum == 0" class="ukey_pop">
 			<p>如果您未插入爱聚U盾，请先插入U盾。</p>
@@ -177,12 +179,13 @@ import { load, login_onclick } from "../../script/ukey.js"; //公共方法
 import typeMsg from './recruitment'
 
 export default {
-  name: "main",
+  name: "main_enter",
   components: {
     typeMsg
   },
   data() {
     return {
+      Two_level_menu_isshow:false,
       type:this.$route.query.type,
       leftMenuList: [],
       Util: Util,
@@ -310,6 +313,15 @@ export default {
     this.getStoreList();
   },
   methods: {
+    changewidth(){
+      if (this.Two_level_menu_isshow) {
+        this.Two_level_menu_isshow = false;
+        this.smallbarShow = true;
+      } else {
+        this.Two_level_menu_isshow = true;
+        this.smallbarShow = false;
+      }
+    },
     change_store(id,shopid){
       if (id == 4) {
         this.$router.push({path:"Trading_Area",query:{shopid:shopid}})
@@ -831,6 +843,43 @@ export default {
 </script>
 
 <style>
+.Two_level_menu{
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 90px;
+  width: 110px;
+  background: #fff;
+  -webkit-box-shadow: 0 0 1px 0 rgba(0,0,0,.2);
+  box-shadow: 0 0 1px 0 rgba(0,0,0,.2);
+  display: none;
+}
+.Two_level_menu.active{
+  display: block;
+}
+.app_left .logo{
+  margin: 14px auto 14px;
+  width: 32px;
+  height: 32px;
+  border: 1px solid #fff;
+  border-radius: 50%;
+  background-size: cover;
+  background-position: 50% 50%;
+  background-color: #fff;
+  background-image:url('../../images/control/tx.png');
+}
+.app_left .menu_list>div{
+    position: relative;
+    font-size: 14px;
+    height: 36px;
+    line-height: 36px;
+    margin-bottom: 14px;
+    cursor: pointer;
+    text-align: center;
+}
+.app_left .menu_list>div.active{
+    background:#38f; 
+}
 #wxMask {
   z-index: 9999;
   position: fixed;

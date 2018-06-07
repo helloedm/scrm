@@ -1,427 +1,452 @@
 <template>
-  <div id="recruitment">
-    <div class="recruitment_left">
-    
-    <section class="store" v-if="store">
-      <div class="Order">
-        <div class="Order_info">
-          <span class="Order_info_num">120</span>
-          <span>待付款订单</span>
-        </div>
-        <div class="Order_info">
-          <span class="Order_info_num">120</span>
-          <span>待发货订单</span>
-        </div>
-        <div class="Order_info">
-          <span class="Order_info_num">120</span>
-          <span>昨日订单量</span>
-        </div>
-        <div class="Order_info">
-          <span class="Order_info_num">120</span>
-          <span>昨日交易额</span>
-        </div>
-        <div class="Order_info">
-          <span class="Order_info_num">￥12,120</span>
-          <span>会员储值金额</span>
-        </div>
-      </div>      
-    </section>
-
-    <section class="Restaurant" v-if="Restaurant">
-      <div class="Order">
-        <div class="Order_info">
-          <span class="Order_info_num">120</span>
-          <span>今日交易额</span>
-        </div>
-        <div class="Order_info">
-          <span class="Order_info_num">120</span>
-          <span>今日付款订单</span>
-        </div>
-        <div class="Order_info">
-          <span class="Order_info_num">120</span>
-          <span>今日新增会员</span>
-        </div>
-        <div class="Order_info">
-          <span class="Order_info_num">120</span>
-          <span>会员储备金额</span>
-        </div>
-        <div class="Order_info">
-          <span class="Order_info_num">￥12,120</span>
-          <span>预计毛利</span>
-        </div>
+<div id="recruitment">
+    <!-- 试用 -->
+    <div class="shop_detaily">
+      <div class="shop_detaily_top">
+        <div>您现在使用的是爱聚SCRM[{{which_created}}][<span>{{username}}</span>]试用版</div>
+        <div class="update_now">立即升级</div>
+        <div style="font-size:14px;color:#4A7ECF;cursor: pointer;">了解更多</div>        
       </div>
-      <div class="food">
-        <div class="Takeoutfood">
-          <div class="Takeoutfood_status">
-            <span style="margin-right:8px;">外卖（已关闭）</span>
-            <el-switch
-              class="foods"
-              style="display: block"
-              v-model="value4"
-              active-color="#5CB3FF"
-              inactive-color="#C0CCDA"
-              @change="Takeoutfood_status(value4)"
-              active-text="开"
-              inactive-text="关">
-            </el-switch>
-          </div>
-          <div class="Receipt">
-            <div class="Deliver_goods" :class={active:value4}>
-              <span style="margin-left:20px;font-size:12px;">外卖订单-待接单</span>
-              <span style="margin-right:16px;color:#5CB3FF;">556个订单</span>
-            </div>
-            <div class="Deliver_goods" :class={active:value4}>
-              <span style="margin-left:20px;font-size:12px;">外卖订单-待发货</span>
-              <span style="margin-right:16px;color:#5CB3FF;">5个订单</span>
-            </div>
-          </div>
-        </div>
-        <div class="Takeoutfood">
-          <div class="Takeoutfood_status">
-            <span style="margin-right:8px;">堂食点餐（已开启）</span>
-            <el-switch
-              @change="dinner(value3)"
-              class="foods"
-              style="display: block"
-              v-model="value3"
-              active-color="#5CB3FF"
-              inactive-color="#C0CCDA"
-              active-text="开"
-              inactive-text="关">
-            </el-switch>
-          </div>
-          <div class="Receipt">
-            <div class="Deliver_goods" :class={active:value3}>
-              <span style="margin-left:20px;font-size:12px;">堂食订单-待付款</span>
-              <span style="margin-right:16px;color:#5CB3FF;">556个订单</span>
-            </div>
-          </div>
-        </div>
-      </div> 
-    </section>
-
-    <section class="retail" v-if="retail">
-      <div class="Member_zone">
-        <div style="font-size:14px;color:rgba(31,45,61,1);line-height:20px;font-weight:bold;margin:16px 0 0 24px;">会员</div>
-        <div class="member_num">
-          <div class="left">
-            <div class="information" style="margin-top:20px;">
-              <img src="../../images/control/1.png" alt="">
-              <div>
-                <span>门店销售额</span>
-                <span>234.00</span>
-              </div>
-              <div>
-                <span>门店支付订单数</span>
-                <span>231</span>
-              </div>
-            </div>
-            <div class="information" style="margin:41px 0 22px 0;">
-              <img src="../../images/control/2.png" alt="">
-              <div>
-                <span>新增客户</span>
-                <span>23</span>
-              </div>
-              <div>
-                <span>支付客户数</span>
-                <span>33</span>
-              </div>
-            </div>
-          </div>
-          <div class="right">
-            <div class="information" style="margin-top:20px;">
-              <img src="../../images/control/3.png" alt="">
-              <div>
-                <span>网店销售额</span>
-                <span>0.00</span>
-              </div>
-              <div>
-                <span>网店支付订单数</span>
-                <span>1000</span>
-              </div>
-            </div>
-            <div class="information" style="margin:41px 0 22px 0;">
-              <img src="../../images/control/4.png" alt="">
-              <div>
-                <span>新增客户</span>
-                <span>12</span>
-              </div>
-              <div>
-                <span>会员储值金额</span>
-                <span>2312,3340.00</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-    
-      <div class="Member_info_Interaction">
-        <div class="Member">
-          <span>会员</span>
-          <div class="Member_info">
-            <div class="total_member" style="background:rgba(92,179,255,1);">
-              <div style="margin-left:12px;">
-                <img src="../../images/control/hy.png" alt="">
-                <span style="font-size:12px;color:#fff;">总会员数</span>
-              </div>
-              <span style="font-size:16px;color:#fff;margin-right:12px;">55669</span>
-            </div>
-            <div class="new_add" style="background:rgba(92,179,255,0.84);">
-              <div style="margin-left:12px;">
-                <img src="../../images/control/add.png" alt="" style="width:10px;">
-                <span style="font-size:12px;color:#fff;">昨日新增</span>
-              </div>
-              <span style="font-size:16px;color:#fff;margin-right:12px;">776</span>
-            </div>
-            <div class="yesterday_active" style="background:rgba(92,179,255,0.64);">
-              <div style="margin-left:12px;">
-                <img src="../../images/control/act.png" alt="" style="width:14px;">
-                <span style="font-size:12px;color:#fff;">昨日活跃</span>
-              </div>
-              <span style="font-size:16px;color:#fff;margin-right:12px;">55669</span>
-            </div>
-          </div>
-        </div>
-        <div class="info">
-          <span>消息</span>
-          <div class="Member_info">
-            <div class="total_member" style="background:rgba(254,139,37,1);">
-              <div style="margin-left:12px;">
-                <img src="../../images/control/dx.png" alt="" style="width:13px;">
-                <span style="font-size:12px;color:#fff;">昨日短信群发</span>
-              </div>
-              <span style="font-size:16px;color:#fff;margin-right:12px;">776</span>
-            </div>
-            <div class="new_add" style="background:rgba(254,139,37,0.84);">
-              <div style="margin-left:12px;">
-                <img src="../../images/control/hd.png" alt="" style="width:12px;">
-                <span style="font-size:12px;color:#fff;">昨日互动群发</span>
-              </div>
-              <span style="font-size:16px;color:#fff;margin-right:12px;">776</span>
-            </div>
-            <div class="yesterday_active" style="background:rgba(254,139,37,0.64);">
-              <div style="margin-left:12px;">
-                <img src="../../images/control/hf.png" alt="" style="width:15px;">
-                <span style="font-size:12px;color:#fff;">昨日回复</span>
-              </div>
-              <span style="font-size:16px;color:#fff;margin-right:12px;">776</span>
-            </div>
-          </div>
-        </div>
-        <div class="Interaction">
-          <span>互动</span>
-          <div class="Member_info">
-            <div class="total_member" style="background:rgba(73,204,147,1);">
-              <div style="margin-left:12px;">
-                <img src="../../images/control/fans.png" alt="" style="width:14px;">
-                <span style="font-size:12px;color:#fff;">近7日客转粉数</span>
-              </div>
-              <span style="font-size:16px;color:#fff;margin-right:12px;">776</span>
-            </div>
-            <div class="new_add" style="background:rgba(73,204,147,0.84);">
-              <div style="margin-left:12px;">
-                <img src="../../images/control/cj.png" alt="" style="width:14px;">
-                <span style="font-size:12px;color:#fff;">近7日会员成交</span>
-              </div>
-              <span style="font-size:16px;color:#fff;margin-right:12px;">￥233,344.00</span>
-            </div>
-            <div class="yesterday_active" style="background:rgba(73,204,147,0.64);">
-              <div style="margin-left:12px;">
-                <img src="../../images/control/fg.png" alt="" style="width:14px;">
-                <span style="font-size:12px;color:#fff;">会员复购率</span>
-              </div>
-              <span style="font-size:16px;color:#fff;margin-right:12px;">23%</span>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="calendar_all">
-          <dl class="calendar">
-            <dt class="calendar_header">
-              <button class="el-picker-panel__icon-btn el-date-picker__prev-btn el-icon-d-arrow-left" @click="preMonth"></button>
-              <span class="padding_0_5">{{chooseYear}}</span>年<span class="padding_0_5">{{chooseMonth}}</span>月
-              <button class="el-picker-panel__icon-btn el-date-picker__next-btn el-icon-d-arrow-right" @click="nextMonth"></button>
-            </dt>
-            <dd class="calendar_con">
-              <table class="el-date-table" cellspacing="0" cellpadding="0">
-                <tr>
-                  <th>日</th>
-                  <th>一</th>
-                  <th>二</th>
-                  <th>三</th>
-                  <th>四</th>
-                  <th>五</th>
-                  <th>六</th>
-                </tr>
-                <tr v-for="(week,index) in mounthList" :key="index">
-                  <td 
-                  v-for="day in week" 
-                  :key="day.chooseDay" 
-                  :class="{'disabled':!day.current,'available':day.current,'today':day.chooseYear==nowYear&&day.chooseMonth==nowMonth&&day.chooseDay==nowDay,'current':day.chooseDay==chooseDay,'hasRecord':day.value==1}" 
-                  @click="chooseDate(day)"
-                  >{{day.chooseDay}}</td>
-                </tr>
-              </table>
-            </dd>
-          </dl>
-          <div style="width: 23px;min-height: 300px;background: #f5f8fa;z-index: 9;"></div>
-          <div class="calendar_detaily">
-            <span style="font-size:14px;color:rgba(31,45,61,1);line-height:20px;font-weight:bold;margin:18px 0 0 16px;">营销待办</span>
-            <div class="all_activity">
-              <div class="going_activity">
-                <img src="../../images/control/yingxiao1.png" alt="">
-                <span style="margin:24px 0 16px 0;">进行中的营销活动</span>
-                <span style="font-size:16px;color:#5CB3FF;">340</span>
-              </div>
-              <div class="linging_activity">
-                <img src="../../images/control/yingxiao2.png" alt="">
-                <span style="margin:24px 0 16px 0;">待上线营销活动</span>
-                <span style="font-size:16px;color:#49CC93">340</span>
-              </div>
-              <div class="waiting">
-                <img src="../../images/control/yingxiao3.png" alt="">
-                <span style="margin:24px 0 16px 0;">待审核</span>
-                <span style="font-size:16px;color:#FE8B25;">340</span>
-              </div>
-            </div>
-            <div class="look">
-              查看营销中心
-            </div>
-          </div>
-      </div>
-      <div class="always_function">
-        <span>常用功能</span>
-        <div class="function">
-          <div>
-            <img src="../../images/control/new.png" alt="">
-            <span style="margin-left:10px;">新建商品</span>
-          </div>
-          <div>
-            <img src="../../images/control/coupon.png" alt="">
-            <span style="margin-left:10px;">新建优惠券</span>
-          </div>
-          <div>
-            <img src="../../images/control/discount.png" alt="">
-            <span style="margin-left:10px;">设置满减</span>
-          </div>
-          <div>
-            <img src="../../images/control/eat.png" alt="">
-            <span style="margin-left:10px;">堂食点餐</span>
-          </div>
-          <div>
-            <img src="../../images/control/member.png" alt="">
-            <span style="margin-left:10px;">会员卡</span>
-          </div>
-          <div>
-            <img src="../../images/control/redball.png" alt="">
-            <span style="margin-left:10px;">红包管理</span>
-          </div>        
-        </div>    
-      </div>
-      <div class="always_function">
-        <span>更多服务</span>
-        <div class="more_service">
-          <div>
-            <span>erp</span>
-            <span>移动办公软件</span>
-          </div>
-          <div style="background:rgba(255,147,160,1);">
-            <span>智能收银</span>
-            <span>移动办公软件</span>
-          </div>
-          <div style="background:rgba(139,223,186,1);">
-            <span>小程序</span>
-            <span>移动办公软件</span>
-          </div>
-          <div style="background:rgba(255,181,116,1);">
-            <span>更多</span>
-            <span>移动办公软件</span>
-          </div>      
-        </div>    
+      <div>
+        <span style="color:#557860;">服务热线：<span>0571-89935939</span></span>
+        <span style="color:#AC7453;">升级可获得全部高阶营销功能500+微信群邻家好货推广优先权</span>
       </div>
     </div>
-    <div class="recruitment_right">
-      <div class="h_user_information">
-        <div class="user_info">
-          <div style="display:flex;">
-            <img alt="" src="../../images/control/tx.png"> 
-            <div style="margin: 19px 0px 0px 16px;">
-              <div class="user_name" style="font-size: 14px; color: rgb(31, 45, 61); font-weight: bold;">{{userphone}}</div> 
-              <div class="user_company" style="font-size: 12px; color: rgb(152, 169, 191); margin-top: 8px;">{{username}}</div>
-            </div>            
-          </div>
-          <div class="Edition">专业版</div>
-        </div> 
-        <div class="getPercent">
-          <div class="personal_activity">
-            <div style="margin: 17px 0 0 24px;">红包余额<span style="color:#5CB3FF">9999</span>元</div>
-            <div style="margin: 17px 16px 0 0;color:#5CB3FF;cursor: pointer;">发活动<i class="iconfont" style="font-size:12px;">&#xe62d;</i></div>
-          </div>
-          <div class="personal_activity">
-            <div style="margin: 8px 0 16px 24px;">短信余量 <span style="color:#5CB3FF">999999</span>元</div>
-            <div style="margin: 8px 16px 16px 0;color:#5CB3FF;cursor: pointer;">发活动<i class="iconfont" style="font-size:12px;">&#xe62d;</i></div>
-          </div>
-        </div>
+    <!-- 已到期 -->
+    <div class="Expire" style="display:none;">
+      <div class="information">
+        <span>店铺免费试用结束，已打烊。如需恢复正常营业，请订购有赞微商城</span>
+        <span>官方咨询电话： 0571-89935939</span>
       </div>
-
-      <section class="store" v-if="store || retail">
-        <div class="add_shop">
-          <img src="../../images/control/shop.png" alt="">
-          <div class="add"><i class="iconfont">&#xe767;</i>添加门店</div>
-        </div>        
-      </section>
-        
-      <section class="Restaurant" v-if="Restaurant">
-        <div class="Printer">
-          <div>
-            <img src="../../images/control/Printer.png" alt="">
-            <span>未连打印机</span>
+      <div class="buy_now">
+        立即订购
+      </div>
+    </div>
+    <div class="shop-basic-info">
+      <span style="font-size:16px;font-weight:bold;">{{username}}</span>
+      <div class="Label" style="background:red;color:#fff;">已到期</div>
+      <div class="Label" style="background:green;color:#fff;">试用版</div>
+      <div class="Label" style="border:1px solid #ccc;box-sizing: border-box;">VIP</div>
+    </div>
+    <div style="display:flex;">
+      <div class="recruitment_left">
+        <section class="store" v-if="store">
+          <div class="Order">
+            <div class="Order_info">
+              <span class="Order_info_num">120</span>
+              <span>待付款订单</span>
+            </div>
+            <div class="Order_info">
+              <span class="Order_info_num">120</span>
+              <span>待发货订单</span>
+            </div>
+            <div class="Order_info">
+              <span class="Order_info_num">120</span>
+              <span>昨日订单量</span>
+            </div>
+            <div class="Order_info">
+              <span class="Order_info_num">120</span>
+              <span>昨日交易额</span>
+            </div>
+            <div class="Order_info">
+              <span class="Order_info_num">￥12,120</span>
+              <span>会员储值金额</span>
+            </div>
+          </div>      
+        </section>
+        <section class="Restaurant" v-if="Restaurant">
+          <div class="Order">
+            <div class="Order_info">
+              <span class="Order_info_num">120</span>
+              <span>今日交易额</span>
+            </div>
+            <div class="Order_info">
+              <span class="Order_info_num">120</span>
+              <span>今日付款订单</span>
+            </div>
+            <div class="Order_info">
+              <span class="Order_info_num">120</span>
+              <span>今日新增会员</span>
+            </div>
+            <div class="Order_info">
+              <span class="Order_info_num">120</span>
+              <span>会员储备金额</span>
+            </div>
+            <div class="Order_info">
+              <span class="Order_info_num">￥12,120</span>
+              <span>预计毛利</span>
+            </div>
           </div>
-          <div>
-            <img src="../../images/control/jd.png" alt="">
-            <span>未自动接单</span>
+          <div class="food">
+            <div class="Takeoutfood">
+              <div class="Takeoutfood_status">
+                <span style="margin-right:8px;">外卖（已关闭）</span>
+                <el-switch
+                  class="foods"
+                  style="display: block"
+                  v-model="value4"
+                  active-color="#5CB3FF"
+                  inactive-color="#C0CCDA"
+                  @change="Takeoutfood_status(value4)"
+                  active-text="开"
+                  inactive-text="关">
+                </el-switch>
+              </div>
+              <div class="Receipt">
+                <div class="Deliver_goods" :class={active:value4}>
+                  <span style="margin-left:20px;font-size:12px;">外卖订单-待接单</span>
+                  <span style="margin-right:16px;color:#5CB3FF;">556个订单</span>
+                </div>
+                <div class="Deliver_goods" :class={active:value4}>
+                  <span style="margin-left:20px;font-size:12px;">外卖订单-待发货</span>
+                  <span style="margin-right:16px;color:#5CB3FF;">5个订单</span>
+                </div>
+              </div>
+            </div>
+            <div class="Takeoutfood">
+              <div class="Takeoutfood_status">
+                <span style="margin-right:8px;">堂食点餐（已开启）</span>
+                <el-switch
+                  @change="dinner(value3)"
+                  class="foods"
+                  style="display: block"
+                  v-model="value3"
+                  active-color="#5CB3FF"
+                  inactive-color="#C0CCDA"
+                  active-text="开"
+                  inactive-text="关">
+                </el-switch>
+              </div>
+              <div class="Receipt">
+                <div class="Deliver_goods" :class={active:value3}>
+                  <span style="margin-left:20px;font-size:12px;">堂食订单-待付款</span>
+                  <span style="margin-right:16px;color:#5CB3FF;">556个订单</span>
+                </div>
+              </div>
+            </div>
+          </div> 
+        </section>
+        <section class="retail" v-if="retail">
+          <div class="Member_zone">
+            <div style="font-size:14px;color:rgba(31,45,61,1);line-height:20px;font-weight:bold;margin:16px 0 0 24px;">会员</div>
+            <div class="member_num">
+              <div class="left">
+                <div class="information" style="margin-top:20px;">
+                  <img src="../../images/control/1.png" alt="">
+                  <div>
+                    <span>门店销售额</span>
+                    <span>234.00</span>
+                  </div>
+                  <div>
+                    <span>门店支付订单数</span>
+                    <span>231</span>
+                  </div>
+                </div>
+                <div class="information" style="margin:41px 0 22px 0;">
+                  <img src="../../images/control/2.png" alt="">
+                  <div>
+                    <span>新增客户</span>
+                    <span>23</span>
+                  </div>
+                  <div>
+                    <span>支付客户数</span>
+                    <span>33</span>
+                  </div>
+                </div>
+              </div>
+              <div class="right">
+                <div class="information" style="margin-top:20px;">
+                  <img src="../../images/control/3.png" alt="">
+                  <div>
+                    <span>网店销售额</span>
+                    <span>0.00</span>
+                  </div>
+                  <div>
+                    <span>网店支付订单数</span>
+                    <span>1000</span>
+                  </div>
+                </div>
+                <div class="information" style="margin:41px 0 22px 0;">
+                  <img src="../../images/control/4.png" alt="">
+                  <div>
+                    <span>新增客户</span>
+                    <span>12</span>
+                  </div>
+                  <div>
+                    <span>会员储值金额</span>
+                    <span>2312,3340.00</span>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
-        </div>
-      </section>
-
-      <div class="Customer_manager">
-          <img src="../../images/control/kefu.png" alt="">
+        </section>
+        <div class="Member_info_Interaction">
+          <div class="Member">
+            <span>会员</span>
+            <div class="Member_info">
+              <div class="total_member" style="background:rgba(92,179,255,1);">
+                <div style="margin-left:12px;">
+                  <img src="../../images/control/hy.png" alt="">
+                  <span style="font-size:12px;color:#fff;">总会员数</span>
+                </div>
+                <span style="font-size:16px;color:#fff;margin-right:12px;">55669</span>
+              </div>
+              <div class="new_add" style="background:rgba(92,179,255,0.84);">
+                <div style="margin-left:12px;">
+                  <img src="../../images/control/add.png" alt="" style="width:10px;">
+                  <span style="font-size:12px;color:#fff;">昨日新增</span>
+                </div>
+                <span style="font-size:16px;color:#fff;margin-right:12px;">776</span>
+              </div>
+              <div class="yesterday_active" style="background:rgba(92,179,255,0.64);">
+                <div style="margin-left:12px;">
+                  <img src="../../images/control/act.png" alt="" style="width:14px;">
+                  <span style="font-size:12px;color:#fff;">昨日活跃</span>
+                </div>
+                <span style="font-size:16px;color:#fff;margin-right:12px;">55669</span>
+              </div>
+            </div>
+          </div>
           <div class="info">
-            <div><span style="color:#98A9BF;font-size:12px;">客户经理</span><span style="margin-left:12px;">巍然</span></div>
-            <div style="margin-top:13px;"><span style="color:#98A9BF;font-size:12px;">电话客服</span><span style="margin-left:12px;">199 8889 8738</span></div>            
+            <span>消息</span>
+            <div class="Member_info">
+              <div class="total_member" style="background:rgba(254,139,37,1);">
+                <div style="margin-left:12px;">
+                  <img src="../../images/control/dx.png" alt="" style="width:13px;">
+                  <span style="font-size:12px;color:#fff;">昨日短信群发</span>
+                </div>
+                <span style="font-size:16px;color:#fff;margin-right:12px;">776</span>
+              </div>
+              <div class="new_add" style="background:rgba(254,139,37,0.84);">
+                <div style="margin-left:12px;">
+                  <img src="../../images/control/hd.png" alt="" style="width:12px;">
+                  <span style="font-size:12px;color:#fff;">昨日互动群发</span>
+                </div>
+                <span style="font-size:16px;color:#fff;margin-right:12px;">776</span>
+              </div>
+              <div class="yesterday_active" style="background:rgba(254,139,37,0.64);">
+                <div style="margin-left:12px;">
+                  <img src="../../images/control/hf.png" alt="" style="width:15px;">
+                  <span style="font-size:12px;color:#fff;">昨日回复</span>
+                </div>
+                <span style="font-size:16px;color:#fff;margin-right:12px;">776</span>
+              </div>
+            </div>
           </div>
-          <div class="online_kf">
-            <img src="../../images/control/line.png" alt="" style="margin:0 5px 0 0;width:16px;">
-            在线客服
+          <div class="Interaction">
+            <span>互动</span>
+            <div class="Member_info">
+              <div class="total_member" style="background:rgba(73,204,147,1);">
+                <div style="margin-left:12px;">
+                  <img src="../../images/control/fans.png" alt="" style="width:14px;">
+                  <span style="font-size:12px;color:#fff;">近7日客转粉数</span>
+                </div>
+                <span style="font-size:16px;color:#fff;margin-right:12px;">776</span>
+              </div>
+              <div class="new_add" style="background:rgba(73,204,147,0.84);">
+                <div style="margin-left:12px;">
+                  <img src="../../images/control/cj.png" alt="" style="width:14px;">
+                  <span style="font-size:12px;color:#fff;">近7日会员成交</span>
+                </div>
+                <span style="font-size:16px;color:#fff;margin-right:12px;">￥233,344.00</span>
+              </div>
+              <div class="yesterday_active" style="background:rgba(73,204,147,0.64);">
+                <div style="margin-left:12px;">
+                  <img src="../../images/control/fg.png" alt="" style="width:14px;">
+                  <span style="font-size:12px;color:#fff;">会员复购率</span>
+                </div>
+                <span style="font-size:16px;color:#fff;margin-right:12px;">23%</span>
+              </div>
+            </div>
           </div>
-      </div>
-      <div class="publish">
-        <div style="display:flex;justify-content:space-between;padding-right: 25px;">
-          <span style="color:rgba(31,45,61,1);line-height:24px;font-weight:bold;margin:0 0 0 24px;">公告</span>
-          <span style="color: rgb(152, 169, 191);font-size: 16px;font-weight: bold;letter-spacing: 5px;cursor: pointer;">...</span>
         </div>
-        <div class="detaily_info">
-            <div style="display: flex; align-items: center; width: 60%;">
-              <div class="red_ball"></div> 
-              <p style="margin-left: 10px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">关于V10.1.0版本更新</p>
-            </div> 
-            <div class="time">2018-05-28</div>
+        <div class="calendar_all">
+            <dl class="calendar">
+              <dt class="calendar_header">
+                <button class="el-picker-panel__icon-btn el-date-picker__prev-btn el-icon-d-arrow-left" @click="preMonth"></button>
+                <span class="padding_0_5">{{chooseYear}}</span>年<span class="padding_0_5">{{chooseMonth}}</span>月
+                <button class="el-picker-panel__icon-btn el-date-picker__next-btn el-icon-d-arrow-right" @click="nextMonth"></button>
+              </dt>
+              <dd class="calendar_con">
+                <table class="el-date-table" cellspacing="0" cellpadding="0">
+                  <tr>
+                    <th>日</th>
+                    <th>一</th>
+                    <th>二</th>
+                    <th>三</th>
+                    <th>四</th>
+                    <th>五</th>
+                    <th>六</th>
+                  </tr>
+                  <tr v-for="(week,index) in mounthList" :key="index">
+                    <td 
+                    v-for="day in week" 
+                    :key="day.chooseDay" 
+                    :class="{'disabled':!day.current,'available':day.current,'today':day.chooseYear==nowYear&&day.chooseMonth==nowMonth&&day.chooseDay==nowDay,'current':day.chooseDay==chooseDay,'hasRecord':day.value==1}" 
+                    @click="chooseDate(day)"
+                    >{{day.chooseDay}}</td>
+                  </tr>
+                </table>
+              </dd>
+            </dl>
+            <div style="width: 23px;min-height: 300px;background: #f5f8fa;z-index: 9;"></div>
+            <div class="calendar_detaily">
+              <span style="font-size:14px;color:rgba(31,45,61,1);line-height:20px;font-weight:bold;margin:18px 0 0 16px;">营销待办</span>
+              <div class="all_activity">
+                <div class="going_activity">
+                  <img src="../../images/control/yingxiao1.png" alt="">
+                  <span style="margin:24px 0 16px 0;">进行中的营销活动</span>
+                  <span style="font-size:16px;color:#5CB3FF;">340</span>
+                </div>
+                <div class="linging_activity">
+                  <img src="../../images/control/yingxiao2.png" alt="">
+                  <span style="margin:24px 0 16px 0;">待上线营销活动</span>
+                  <span style="font-size:16px;color:#49CC93">340</span>
+                </div>
+                <div class="waiting">
+                  <img src="../../images/control/yingxiao3.png" alt="">
+                  <span style="margin:24px 0 16px 0;">待审核</span>
+                  <span style="font-size:16px;color:#FE8B25;">340</span>
+                </div>
+              </div>
+              <div class="look">
+                查看营销中心
+              </div>
+            </div>
+        </div>
+        <div class="always_function">
+          <span>常用功能</span>
+          <div class="function">
+            <div>
+              <img src="../../images/control/new.png" alt="">
+              <span style="margin-left:10px;">新建商品</span>
+            </div>
+            <div>
+              <img src="../../images/control/coupon.png" alt="">
+              <span style="margin-left:10px;">新建优惠券</span>
+            </div>
+            <div>
+              <img src="../../images/control/discount.png" alt="">
+              <span style="margin-left:10px;">设置满减</span>
+            </div>
+            <div>
+              <img src="../../images/control/eat.png" alt="">
+              <span style="margin-left:10px;">堂食点餐</span>
+            </div>
+            <div>
+              <img src="../../images/control/member.png" alt="">
+              <span style="margin-left:10px;">会员卡</span>
+            </div>
+            <div>
+              <img src="../../images/control/redball.png" alt="">
+              <span style="margin-left:10px;">红包管理</span>
+            </div>        
+          </div>    
+        </div>
+        <div class="always_function">
+          <span>更多服务</span>
+          <div class="more_service">
+            <div>
+              <span>erp</span>
+              <span>移动办公软件</span>
+            </div>
+            <div style="background:rgba(255,147,160,1);">
+              <span>智能收银</span>
+              <span>移动办公软件</span>
+            </div>
+            <div style="background:rgba(139,223,186,1);">
+              <span>小程序</span>
+              <span>移动办公软件</span>
+            </div>
+            <div style="background:rgba(255,181,116,1);">
+              <span>更多</span>
+              <span>移动办公软件</span>
+            </div>      
+          </div>    
+        </div>
+      </div>
+      <div class="recruitment_right">
+        <section class="store" v-if="store || retail">
+          <div class="add_shop">
+            <img src="../../images/control/shop.png" alt="">
+            <div class="add"><i class="iconfont">&#xe767;</i>添加门店</div>
+          </div>        
+        </section>
+        <div class="h_user_information">
+          <!-- <div class="user_info">
+            <div style="display:flex;">
+              <img alt="" src="../../images/control/tx.png"> 
+              <div style="margin: 19px 0px 0px 16px;">
+                <div class="user_name" style="font-size: 14px; color: rgb(31, 45, 61); font-weight: bold;">{{userphone}}</div> 
+                <div class="user_company" style="font-size: 12px; color: rgb(152, 169, 191); margin-top: 8px;">{{username}}</div>
+              </div>            
+            </div>
+            <div class="Edition">专业版</div>
+          </div>  -->
+          <div class="getPercent">
+            <div class="personal_activity">
+              <div style="margin: 17px 0 0 24px;">红包余额<span style="color:#5CB3FF">9999</span>元</div>
+              <div style="margin: 17px 16px 0 0;color:#5CB3FF;cursor: pointer;">发活动<i class="iconfont" style="font-size:12px;">&#xe62d;</i></div>
+            </div>
+            <div class="personal_activity">
+              <div style="margin: 8px 0 16px 24px;">短信余量 <span style="color:#5CB3FF">999999</span>元</div>
+              <div style="margin: 8px 16px 16px 0;color:#5CB3FF;cursor: pointer;">发活动<i class="iconfont" style="font-size:12px;">&#xe62d;</i></div>
+            </div>
           </div>
-        <div class="detaily_info">
-            <div style="display: flex; align-items: center; width: 60%;">
-              <div class="red_ball"></div> 
-              <p style="margin-left: 10px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">关于前端框架调整</p>
-            </div> 
-            <div class="time">2018-05-28</div>
-          </div>  
-        <div class="detaily_info">
-            <div style="display: flex; align-items: center; width: 60%;">
-              <div class="red_ball"></div> 
-              <p style="margin-left: 10px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">关于前端框架调整</p>
-            </div> 
-            <div class="time">2018-05-28</div>
-        </div>            
+        </div>
+
+        <section class="Restaurant" v-if="Restaurant">
+          <div class="Printer">
+            <div>
+              <img src="../../images/control/Printer.png" alt="">
+              <span>未连打印机</span>
+            </div>
+            <div>
+              <img src="../../images/control/jd.png" alt="">
+              <span>未自动接单</span>
+            </div>
+          </div>
+        </section>
+
+        <div class="Customer_manager">
+            <img src="../../images/control/kefu.png" alt="">
+            <div class="info">
+              <div><span style="color:#98A9BF;font-size:12px;">客户经理</span><span style="margin-left:12px;">巍然</span></div>
+              <div style="margin-top:13px;"><span style="color:#98A9BF;font-size:12px;">电话客服</span><span style="margin-left:12px;">199 8889 8738</span></div>            
+            </div>
+            <div class="online_kf">
+              <img src="../../images/control/line.png" alt="" style="margin:0 5px 0 0;width:16px;">
+              在线客服
+            </div>
+        </div>
+        <div class="publish">
+          <div style="display:flex;justify-content:space-between;padding-right: 25px;">
+            <span style="color:rgba(31,45,61,1);line-height:24px;font-weight:bold;margin:0 0 0 24px;">公告</span>
+            <span style="color: rgb(152, 169, 191);font-size: 16px;font-weight: bold;letter-spacing: 5px;cursor: pointer;">...</span>
+          </div>
+          <div class="detaily_info">
+              <div style="display: flex; align-items: center; width: 60%;">
+                <div class="red_ball"></div> 
+                <p style="margin-left: 10px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">关于V10.1.0版本更新</p>
+              </div> 
+              <div class="time">2018-05-28</div>
+            </div>
+          <div class="detaily_info">
+              <div style="display: flex; align-items: center; width: 60%;">
+                <div class="red_ball"></div> 
+                <p style="margin-left: 10px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">关于前端框架调整</p>
+              </div> 
+              <div class="time">2018-05-28</div>
+            </div>  
+          <div class="detaily_info">
+              <div style="display: flex; align-items: center; width: 60%;">
+                <div class="red_ball"></div> 
+                <p style="margin-left: 10px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">关于前端框架调整</p>
+              </div> 
+              <div class="time">2018-05-28</div>
+          </div>            
+        </div>
       </div>
     </div>
   </div>
@@ -451,7 +476,8 @@
       store:false,
       retail:false,
       userphone:'',
-      username:''
+      username:'',
+      which_created:''
     };
   },
   created () {
@@ -481,16 +507,19 @@
           this.store = true; 
           this.retail = false;
           this.Restaurant = false;
+          this.which_created = "电商版"
           break;
         case '3'://餐饮
           this.Restaurant = true;
           this.store = false;
           this.retail = false;
+          this.which_created = "餐饮版"
           break;
         case '2'://零售
           this.retail = true;
           this.store = false;
           this.Restaurant = false;
+          this.which_created = "零售版"
           break;
         default:
           break;
@@ -739,7 +768,7 @@
     width: 100%;
     height:69px;
     background:rgba(255,181,116,0.16);
-    margin-top: 24px;
+    margin-bottom:24px;
     display: flex;
     align-items: center;
   }
@@ -864,18 +893,17 @@
     margin-top: 24px;
     overflow: hidden;
   }
-  #recruitment{
-    display: flex;
-  }
   .recruitment_left{
     width:66%;
     background: #f5f8fa;
     overflow: hidden;
+    float: left;
   }
   .recruitment_right{
-    width:28%;
+    width:346px;
     background: #f5f8fa;
     margin-left: 24px;
+    float: left;
   }
   .Order_info{
     width:20%;
@@ -1061,5 +1089,69 @@
   .food .el-switch__core:after{
         width:18px;
     height:18px;
+  }
+  .shop_detaily {
+    width:100%;
+    background: #CCF0D6;
+    overflow: hidden;
+    padding:8px 0;
+  }
+  .shop_detaily_top{
+    display: flex;  
+    height: 32px;
+    line-height: 34px;
+    font-size: 16px;
+    font-weight: bold;
+  }
+  .update_now{
+    width: 95px;
+    height: 28px;
+    line-height: 28px;
+    background: red;
+    border-radius: 5px;
+    text-align: center;
+    color: #fff;
+    font-size: 14px;
+    margin: 0 5px;
+    cursor: pointer;
+  }
+  .shop-basic-info{
+    display: flex;
+    margin:8px 0 24px 0;
+  }
+  .shop-basic-info .Label{
+    cursor: pointer;
+    width:55px;
+    height:22px;
+    line-height:22px;
+    text-align:center;
+    border-radius:4px;
+    margin:0 5px;
+    font-size:12px;
+  }
+  .Expire{
+    background: #ff4343;
+    border: 1px solid #e8393a;
+    color: #fff;
+    padding: 8px 0;
+    display: flex;
+    align-items: center;
+  }
+  .Expire .information{
+    display: flex;
+    flex-direction: column;
+  }
+  .Expire .information span{
+    margin:2px 0;
+  }
+  .Expire .buy_now{
+    width:100px;
+    line-height:32px;
+    text-align:center;
+    border-radius:5px;
+    background:#fff;
+    color:#f44;
+    margin-left:25px;
+    cursor: pointer;
   }
 </style>
