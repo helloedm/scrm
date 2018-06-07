@@ -29,7 +29,7 @@
       <div class="Label" style="background:green;color:#fff;">试用版</div>
       <div class="Label" style="border:1px solid #ccc;box-sizing: border-box;">VIP</div>
     </div>
-    <div style="display:flex;justify-content: space-between;min-width:1020px;">
+    <div style="display:flex;justify-content: space-between;">
       <div class="recruitment_left">
         <section class="store" v-if="store">
           <div class="Order">

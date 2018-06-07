@@ -29,7 +29,7 @@
 
 <!-- 内容 -->
 		<div class="app_right" v-bind:class="{smallbarClass: !smallbarShow,'app_right_p':!appNaveHide}">
-			<div class="app_right_box">
+			<div class="app_right_box" style="min-width:1000px;">
         <keep-alive>
           <router-view :type-msg="type"></router-view>
         </keep-alive>
