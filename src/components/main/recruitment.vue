@@ -1,9 +1,10 @@
 <template>
 <div id="recruitment">
     <!-- 试用 -->
+   
     <div class="shop_detaily">
       <div class="shop_detaily_top">
-        <div>您现在使用的是爱聚SCRM[{{which_created}}][<span>{{username}}</span>]试用版</div>
+        <div>您现在使用的是爱聚SCRM[{{which_created}}]试用版</div>
         <div class="update_now">立即升级</div>
         <div style="font-size:14px;color:#4A7ECF;cursor: pointer;">了解更多</div>        
       </div>
@@ -28,7 +29,7 @@
       <div class="Label" style="background:green;color:#fff;">试用版</div>
       <div class="Label" style="border:1px solid #ccc;box-sizing: border-box;">VIP</div>
     </div>
-    <div style="display:flex;">
+    <div style="display:flex;justify-content: space-between;min-width:1020px;">
       <div class="recruitment_left">
         <section class="store" v-if="store">
           <div class="Order">
@@ -280,7 +281,7 @@
                     <th>六</th>
                   </tr>
                   <tr v-for="(week,index) in mounthList" :key="index">
-                    <td 
+                    <td
                     v-for="day in week" 
                     :key="day.chooseDay" 
                     :class="{'disabled':!day.current,'available':day.current,'today':day.chooseYear==nowYear&&day.chooseMonth==nowMonth&&day.chooseDay==nowDay,'current':day.chooseDay==chooseDay,'hasRecord':day.value==1}" 
@@ -730,7 +731,7 @@
     padding-bottom: 16px;
   }
   .online_kf{
-    width:85px;
+    padding:0 6px;
     height:27px;
     background:rgba(255,255,255,1);
     border-radius:4px;
@@ -894,15 +895,18 @@
     overflow: hidden;
   }
   .recruitment_left{
-    width:66%;
+    width:80%;
     background: #f5f8fa;
     overflow: hidden;
     float: left;
+    padding-right: 24px;
+    -webkit-transition: all 0.2s linear;
+    -moz-transition: all 0.2s linear;
+    transition: all 0.2s linear;
   }
   .recruitment_right{
     width:346px;
     background: #f5f8fa;
-    margin-left: 24px;
     float: left;
   }
   .Order_info{
@@ -981,7 +985,7 @@
   }
   .calendar .el-date-table th{
     padding: 8px 0;
-    width: 40px;
+    width: 50px;
     height: 30px;
     -webkit-box-sizing: border-box;
     box-sizing: border-box;
